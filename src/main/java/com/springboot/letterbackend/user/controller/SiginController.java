@@ -3,12 +3,13 @@ package com.springboot.letterbackend.user.controller;
 
 import com.springboot.letterbackend.user.dto.SignInResultDto;
 import com.springboot.letterbackend.user.dto.SignUpResultDto;
-import com.springboot.letterbackend.user.service.ProfileServiceImpl;
+import com.springboot.letterbackend.user.service.impl.ProfileServiceImpl;
 import com.springboot.letterbackend.user.service.SignService;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,7 +29,7 @@ public class SiginController {
     private final ProfileServiceImpl profileService;
 
     @Autowired
-    public SiginController(SignService signService, ProfileServiceImpl profileService) {
+    public SiginController(@Qualifier("siginServiceImpl")SignService signService, ProfileServiceImpl profileService) {
         this.signService = signService;
         this.profileService = profileService;
     }
