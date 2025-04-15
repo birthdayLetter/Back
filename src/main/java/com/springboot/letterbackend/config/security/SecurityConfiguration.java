@@ -9,6 +9,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 public class SecurityConfiguration {
@@ -28,6 +33,11 @@ public class SecurityConfiguration {
                                 "/swagger-resources/**",
                                 "/webjars/**").permitAll());
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/sign-api/sign-in","/sign-api/sign-up","/sign-api/kakao/sign-up","/sign-api/exception").permitAll());
+        http
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/ws/**", "/app/**", "/friend/**", "/letter/**","/ws-stomp/**","/sub/**","/pub/**").permitAll());
+
+
         http.authorizeHttpRequests(authorizeRequests ->authorizeRequests.requestMatchers("/product/**").permitAll());
         http.authorizeHttpRequests(authorizeRequest-> authorizeRequest.requestMatchers("**exception**").permitAll());
         http.authorizeHttpRequests(authorizeRequest-> authorizeRequest.anyRequest().hasRole("ADMIN"));
@@ -37,6 +47,7 @@ public class SecurityConfiguration {
         http.exceptionHandling(exception -> exception.accessDeniedHandler(new CustomAccessDeniedHandler()));
         http.exceptionHandling(exception -> exception.authenticationEntryPoint(new CustomAuthenticatonEntryPoint()));
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
         //사이트 위변조 요청 방지
       http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
@@ -50,7 +61,20 @@ public class SecurityConfiguration {
   @Bean
   public WebSecurityCustomizer webSecurityCustomizer(){
         return (web )->web.ignoring().requestMatchers("/v3/api-docs/**","swagger-resources/**",
-                "/swagger-ui/**","/swagger-ui/index.html/**","/webjars/**","/sign-api/exception");
+                "/swagger-ui/**","/swagger-ui/index.html/**","/webjars/**","/sign-api/exception","/ws/**", "/app/**", "/friend/**", "/letter/**","/ws-stomp/**","/sub/**","/pub/**");
   }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOriginPatterns(Arrays.asList("*")); // 허용할 출처 목록
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용할 HTTP 메서드 목록
+        configuration.setAllowedHeaders(Arrays.asList("*")); // 허용할 헤더 목록
+        configuration.setAllowCredentials(true); // 쿠키 인증 정보 허용
+        configuration.setMaxAge(3600L); // Preflight 요청 캐싱 시간
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration); // 모든 경로에 대해 위 설정 적용
+        return source;
+    }
 
 }
