@@ -1,4 +1,4 @@
-package com.springboot.letterbackend.user.service;
+package com.springboot.letterbackend.user.service.impl;
 
 
 import com.springboot.letterbackend.common.CommonResponse;
@@ -7,6 +7,7 @@ import com.springboot.letterbackend.user.dto.SignInResultDto;
 import com.springboot.letterbackend.user.dto.SignUpResultDto;
 import com.springboot.letterbackend.data.entity.User;
 import com.springboot.letterbackend.data.repository.UserRepository;
+import com.springboot.letterbackend.user.service.SignService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
