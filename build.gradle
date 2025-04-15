@@ -47,6 +47,10 @@ dependencies {
     implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
     //웹소켓 의존성 추가
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework:spring-messaging'
+    //웹소켓
+    compileOnly("org.webjars:sockjs-client:1.0.2")
+    compileOnly("org.webjars:stomp-websocket:2.3.3")
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
