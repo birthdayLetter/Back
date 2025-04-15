@@ -2,18 +2,24 @@ package com.springboot.letterbackend.data.entity;
 
 
 import jakarta.persistence.*;
+import lombok.*;
 
-@Table(name = "friend")
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table
 public class Friend {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    String user_id;
+    private String userId;
     @Column(nullable = false)
-    String friend_id;
+    private String friendId;
     @Column(nullable = false)
-    Status status;
+    private Status status;
 
 }
