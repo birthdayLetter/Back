@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -105,7 +106,7 @@ public class KakaoSignServiceImpl implements SignService {
 
     // 카카오 정보로 회원가입을 진행합니다
     @Override
-    public SignUpResultDto signUp(String id, String password, String name, String role, String url) {
+    public SignUpResultDto signUp(String id, String password, String name, String role, String url, LocalDateTime birthday) {
        logger.info("카카오 정보를 기반으로 회원가입을 진행합니다.");
         User user;
         user=User.builder()
