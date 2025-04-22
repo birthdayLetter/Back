@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 
 
@@ -35,7 +36,7 @@ public class SiginServiceImpl implements SignService {
 
 
     @Override
-    public SignUpResultDto signUp(String id, String password, String name, String role,String imgUrl) {
+    public SignUpResultDto signUp(String id, String password, String name, String role, String imgUrl, LocalDateTime birthDay) {
 
         LOGGER.info("회원가입 정보 전달");
         User user;
@@ -45,6 +46,7 @@ public class SiginServiceImpl implements SignService {
                     .uid(id)
                     .name(name)
                     .password(passwordEncoder.encode(password))
+                    .birthDay(birthDay)
                     .roles(Collections.singletonList("ROLE_ADMIN"))
                     .build();
 
@@ -55,6 +57,7 @@ public class SiginServiceImpl implements SignService {
                     .name(name)
                     .password(passwordEncoder.encode(password))
                     .profileImgUrl(imgUrl)
+                    .birthDay(birthDay)
                     .roles(Collections.singletonList("ROLE_USER"))
                     .build();
         }
