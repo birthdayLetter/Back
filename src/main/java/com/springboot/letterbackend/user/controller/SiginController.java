@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,7 +55,8 @@ public class SiginController {
             @Parameter(name = "password",required = true) @RequestParam String password,
             @Parameter(name = "name",required = true) @RequestParam String name,
             @Parameter(name = "role",required = true) @RequestParam String role,
-            @RequestPart(name = "profileImg", required = false) @RequestParam  MultipartFile profileImg
+            @RequestPart(name = "profileImg", required = false) @RequestParam  MultipartFile profileImg,
+            @Parameter(name = "birthDay", required = true) @RequestParam LocalDateTime birthDay
     ) throws Exception {
         logger.info("회원가입을 수행합니다 id :{} password :** role:{}",id,role);
 
@@ -62,7 +64,7 @@ public class SiginController {
         if(!profileImg.isEmpty()){
             profileImgUrl=profileService.returnProfilePath(profileImg);
         }
-        SignUpResultDto signUpResultDto = signService.signUp(id, password, name, role,profileImgUrl);
+        SignUpResultDto signUpResultDto = signService.signUp(id, password, name, role,profileImgUrl, birthDay);
         logger.info("회원가입을 완료했습니다 id:{}",id);
         return signUpResultDto;
     }
