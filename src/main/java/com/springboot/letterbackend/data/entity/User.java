@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -39,6 +40,10 @@ public class User implements UserDetails {
 
     @Column(nullable = true)
     private String profileImgUrl;
+
+    @Column(nullable = false)
+    LocalDateTime birthDay;
+
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
