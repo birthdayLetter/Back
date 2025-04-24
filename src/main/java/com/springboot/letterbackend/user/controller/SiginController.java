@@ -66,8 +66,19 @@ public class SiginController {
         if(!profileImg.isEmpty()){
             profileImgUrl=profileService.returnProfilePath(profileImg);
         }
-        SignUpResultDto signUpResultDto = signService.signUp(id, password, name, role,profileImgUrl, birthDay);
-        logger.info("회원가입을 완료했습니다 id:{}",id);
+
+        //이메일 검색해서 유저가 있으면 유저가 이미 존재한다고 보내기
+        boolean isUserExisted =checkService.CheckEmail(email);
+        if(isUserExisted){
+            SignUpResultDto signUpResultDto = new SignUpResultDto();
+            signUpResultDto.setSuccess(false);
+            signUpResultDto.setMsg("이미 유저가 존재합니다");
+            signUpResultDto.setCode(0);
+            return signUpResultDto;
+        }
+
+        SignUpResultDto signUpResultDto = signService.signUp(email, password, name, profileImgUrl, birthDay);
+        logger.info("회원가입을 완료했습니다 id:{}",email);
         return signUpResultDto;
     }
 
