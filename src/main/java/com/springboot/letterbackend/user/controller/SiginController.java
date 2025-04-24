@@ -28,11 +28,13 @@ public class SiginController {
     private final Logger logger = LoggerFactory.getLogger(SiginController.class);
     private final SignService signService;
     private final ProfileServiceImpl profileService;
+    private final CheckService checkService;
 
     @Autowired
-    public SiginController(@Qualifier("siginServiceImpl")SignService signService, ProfileServiceImpl profileService) {
+    public SiginController(@Qualifier("siginServiceImpl")SignService signService, ProfileServiceImpl profileService, CheckService checkService) {
         this.signService = signService;
         this.profileService = profileService;
+        this.checkService = checkService;
     }
 
     @PostMapping(value = "/sign-in")
