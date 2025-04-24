@@ -57,7 +57,6 @@ public class SiginController {
             @Parameter(name = "id",required = true) @RequestParam String id,
             @Parameter(name = "password",required = true) @RequestParam String password,
             @Parameter(name = "name",required = true) @RequestParam String name,
-            @Parameter(name = "role",required = true) @RequestParam String role,
             @RequestPart(name = "profileImg", required = false) @RequestParam  MultipartFile profileImg,
             @Parameter(name = "birthDay", required = true) @RequestParam LocalDateTime birthDay
     ) throws Exception {
