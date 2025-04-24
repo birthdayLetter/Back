@@ -38,31 +38,19 @@ public class SiginServiceImpl implements SignService {
 
 
     @Override
-    public SignUpResultDto signUp(String id, String password, String name, String role, String imgUrl, LocalDateTime birthDay) {
+    public SignUpResultDto signUp(String id, String password, String name,  String imgUrl, LocalDateTime birthDay) {
 
         LOGGER.info("회원가입 정보 전달");
         User user;
+        user=User.builder()
+                .uid(id)
+                .name(name)
+                .password(passwordEncoder.encode(password))
+                .profileImgUrl(imgUrl)
+                .birthDay(birthDay)
+                .roles(Collections.singletonList(String.valueOf(GENERAL)))
+                .build();
 
-        if(role.equalsIgnoreCase("admin")){
-            user=User.builder()
-                    .uid(id)
-                    .name(name)
-                    .password(passwordEncoder.encode(password))
-                    .birthDay(birthDay)
-                    .roles(Collections.singletonList("ROLE_ADMIN"))
-                    .build();
-
-        }
-        else{
-            user=User.builder()
-                    .uid(id)
-                    .name(name)
-                    .password(passwordEncoder.encode(password))
-                    .profileImgUrl(imgUrl)
-                    .birthDay(birthDay)
-                    .roles(Collections.singletonList("ROLE_USER"))
-                    .build();
-        }
 
         User savedUser=userRepository.save(user);
         SignUpResultDto signUpResultDto=new SignUpResultDto();
