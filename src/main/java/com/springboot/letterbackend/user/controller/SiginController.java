@@ -54,13 +54,13 @@ public class SiginController {
 
     @PostMapping(value = "/sign-up",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public SignUpResultDto signUp(
-            @Parameter(name = "id",required = true) @RequestParam String id,
+            @Parameter(name = "email",required = true) @RequestParam String email,
             @Parameter(name = "password",required = true) @RequestParam String password,
             @Parameter(name = "name",required = true) @RequestParam String name,
             @RequestPart(name = "profileImg", required = false) @RequestParam  MultipartFile profileImg,
             @Parameter(name = "birthDay", required = true) @RequestParam LocalDateTime birthDay
     ) throws Exception {
-        logger.info("회원가입을 수행합니다 id :{} password :** role:{}",id,role);
+        logger.info("회원가입을 수행합니다 id :{} password :** role:{}",email);
 
         String profileImgUrl = "";
         if(!profileImg.isEmpty()){
