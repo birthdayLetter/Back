@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
+import static com.springboot.letterbackend.data.entity.LoginMethod.GENERAL;
+
 
 @Service
 public class SiginServiceImpl implements SignService {
@@ -96,7 +98,8 @@ public class SiginServiceImpl implements SignService {
 
         return signInResultDto;
     }
-
+    
+    //DTO쪽 메서드로 분리하기
     private void setSuccessResult(SignUpResultDto signUpResultDto) {
         signUpResultDto.setSuccess(true);
         signUpResultDto.setCode(CommonResponse.SUCCESS.getCode());
