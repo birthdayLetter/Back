@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.UUID;
 
 import static com.springboot.letterbackend.data.entity.LoginMethod.GENERAL;
 
@@ -44,7 +45,8 @@ public class SiginServiceImpl implements SignService {
         LOGGER.info("회원가입 정보 전달");
         User user;
         user=User.builder()
-                .uid(id)
+                .uid(UUID.randomUUID().toString().substring(0,8))
+                .email(id)
                 .name(name)
                 .password(passwordEncoder.encode(password))
                 .profileImgUrl(imgUrl)
