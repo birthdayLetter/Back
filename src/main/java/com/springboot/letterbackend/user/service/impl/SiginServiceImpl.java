@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
@@ -38,7 +39,7 @@ public class SiginServiceImpl implements SignService {
 
 
     @Override
-    public SignUpResultDto signUp(String id, String password, String name,  String imgUrl, LocalDateTime birthDay) {
+    public SignUpResultDto signUp(String id, String password, String name,  String imgUrl, LocalDate birthDay) {
 
         LOGGER.info("회원가입 정보 전달");
         User user;
