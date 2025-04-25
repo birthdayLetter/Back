@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,7 +77,7 @@ public class SiginController {
             @Parameter(name = "password",required = true) @RequestParam String password,
             @Parameter(name = "name",required = true) @RequestParam String name,
             @RequestPart(name = "profileImg", required = false) @RequestParam  MultipartFile profileImg,
-            @Parameter(name = "birthDay", required = true) @RequestParam LocalDateTime birthDay
+            @Parameter(name = "birthDay", required = true) @RequestParam LocalDate birthDay
     ) throws Exception {
         logger.info("회원가입을 수행합니다 id :{} password :** role:{}",email);
 
