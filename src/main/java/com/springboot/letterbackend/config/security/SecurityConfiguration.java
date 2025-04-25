@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                                 "/swagger-ui/index.html/**", // 일부 환경에서 필요
                                 "/swagger-resources/**",
                                 "/webjars/**").permitAll());
-        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/sign-api/sign-in","/sign-api/sign-up","/sign-api/kakao/sign-up","/sign-api/exception").permitAll());
+        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/sign-api/sign-in","/sign-api/sign-up","/sign-api/kakao/sign-up","/sign-api/exception","sign-api/check/email").permitAll());
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/ws/**", "/app/**", "/friend/**", "/letter/**","/ws-stomp/**","/sub/**","/pub/**").permitAll());
