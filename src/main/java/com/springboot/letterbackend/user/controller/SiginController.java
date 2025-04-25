@@ -54,7 +54,7 @@ public class SiginController {
     }
 
     @PostMapping(value = "/check/email")
-    public SignUpResultDto checkEmail( @Parameter(name = "email",required = true) @RequestParam String email){
+    public SignUpResultDto checkEmail( @Parameter(name = "email",required = true) @RequestBody String email){
         boolean isUserExisted =checkService.CheckEmail(email);
         SignUpResultDto signUpResultDto = new SignUpResultDto();
         if(isUserExisted){
