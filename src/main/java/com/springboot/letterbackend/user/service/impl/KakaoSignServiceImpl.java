@@ -3,6 +3,7 @@ package com.springboot.letterbackend.user.service.impl;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.springboot.letterbackend.common.CommonResponse;
 import com.springboot.letterbackend.config.security.JwtTokenProvider;
+import com.springboot.letterbackend.data.entity.LoginMethod;
 import com.springboot.letterbackend.data.entity.User;
 import com.springboot.letterbackend.data.repository.UserRepository;
 import com.springboot.letterbackend.user.dto.KakaoRequestBody;
@@ -20,9 +21,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.UUID;
+import com.springboot.letterbackend.data.entity.LoginMethod.*;
+
+import static com.springboot.letterbackend.data.entity.LoginMethod.KAKAO;
 
 
 @Service
@@ -30,6 +35,7 @@ public class KakaoSignServiceImpl implements SignService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     public UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
+
 
     public PasswordEncoder passwordEncoder;
 
@@ -106,15 +112,15 @@ public class KakaoSignServiceImpl implements SignService {
 
     // 카카오 정보로 회원가입을 진행합니다
     @Override
-    public SignUpResultDto signUp(String id, String password, String name, String role, String url, LocalDateTime birthday) {
+    public SignUpResultDto signUp(String id, String password, String name,String url, LocalDate birthday) {
        logger.info("카카오 정보를 기반으로 회원가입을 진행합니다.");
         User user;
         user=User.builder()
-                .uid(String.valueOf(UUID.fromString(id))) //임시로 만든다음에 나중에 수정하도록한다.
+                .uid(String.valueOf(UUID.fromString(id)).substring(0,8)) //임시로 만든다음에 나중에 수정하도록한다. 8자리로 한정함
                 .password("")
                 .profileImgUrl(url)
                 .name(name)
-                .roles(Collections.singletonList("ROLE_USER"))
+                .roles(Collections.singletonList(String.valueOf(KAKAO)))
                 .build();
         User savedUser=userRepository.save(user);
         SignUpResultDto signUpResultDto=new SignUpResultDto();
