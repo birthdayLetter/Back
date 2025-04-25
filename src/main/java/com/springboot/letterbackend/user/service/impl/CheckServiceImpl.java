@@ -3,7 +3,9 @@ package com.springboot.letterbackend.user.service.impl;
 import com.springboot.letterbackend.data.entity.User;
 import com.springboot.letterbackend.data.repository.UserRepository;
 import com.springboot.letterbackend.user.service.CheckService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CheckServiceImpl implements CheckService {
 
     final UserRepository userRepository;
