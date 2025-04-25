@@ -52,6 +52,24 @@ public class SiginController {
         return signInResultDto;
     }
 
+    @PostMapping(value = "/check/email")
+    public SignUpResultDto checkEmail( @Parameter(name = "email",required = true) @RequestParam String email){
+        boolean isUserExisted =checkService.CheckEmail(email);
+        SignUpResultDto signUpResultDto = new SignUpResultDto();
+        if(isUserExisted){
+            signUpResultDto.setSuccess(false);
+            signUpResultDto.setMsg("이미 유저가 존재합니다");
+            signUpResultDto.setCode(0);
+
+        }
+        signUpResultDto.setSuccess(true);
+        signUpResultDto.setCode(1);
+        signUpResultDto.setMsg("사용 가능한 이메일 입니다");
+
+        return signUpResultDto;
+    }
+
+
     @PostMapping(value = "/sign-up",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public SignUpResultDto signUp(
             @Parameter(name = "email",required = true) @RequestParam String email,
