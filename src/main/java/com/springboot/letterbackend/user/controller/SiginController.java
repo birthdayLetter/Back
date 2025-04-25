@@ -41,13 +41,13 @@ public class SiginController {
 
     @PostMapping(value = "/sign-in")
     public SignInResultDto signIn(
-           @Parameter(name = "id",required = true) @RequestParam String id,
+           @Parameter(name = "email",required = true) @RequestParam String email,
            @Parameter(name="password",required = true) @RequestParam String password
     )throws RuntimeException{
-        logger.info("로그인을 시도하고 있습니다 id :{}, pw:*",id);
-        SignInResultDto signInResultDto = signService.signIn(id, password);
+        logger.info("로그인을 시도하고 있습니다 id :{}, pw:*",email);
+        SignInResultDto signInResultDto = signService.signIn(email, password);
         if(signInResultDto.getCode()==0){
-            logger.info("정상적으로 로그인 되었습니다 id:{},token:{}",id,signInResultDto.getToken());
+            logger.info("정상적으로 로그인 되었습니다 id:{},token:{}",email,signInResultDto.getToken());
 
         }
         return signInResultDto;
