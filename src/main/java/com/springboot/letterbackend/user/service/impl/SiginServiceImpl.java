@@ -72,7 +72,7 @@ public class SiginServiceImpl implements SignService {
     @Override
     public SignInResultDto signIn(String id, String password) throws RuntimeException {
         LOGGER.info("signDataHandler로 회원정보 요청");
-        User user=userRepository.getByUid(id);
+        User user=userRepository.getByEmail(id);
         LOGGER.info("id"+id);
         LOGGER.info("패스워드 비교 수행");
         if(!passwordEncoder.matches(password,user.getPassword())){
