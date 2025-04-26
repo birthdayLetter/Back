@@ -1,7 +1,8 @@
 package com.springboot.letterbackend.user.controller;
 
 import com.springboot.letterbackend.data.entity.User;
-import com.springboot.letterbackend.user.dto.UserProfileReponseDTO;
+import com.springboot.letterbackend.user.dto.UserProfileResponseDTO;
+import com.springboot.letterbackend.user.dto.UserProfileRequestDTO;
 import com.springboot.letterbackend.user.service.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,12 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.net.http.HttpResponse;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 유저 프로파일 변경 관련 컨트롤러 입니다.
@@ -53,19 +49,11 @@ public class UserProfileController {
     @Parameters({
             @Parameter(name = "X-AUTH-TOKEN",required = true,in = ParameterIn.HEADER)
     })
-    @GetMapping(value = "/")
-    public UserProfileReponseDTO getUserProfile(@AuthenticationPrincipal User user) {
+    @GetMapping(value = "/")// UserServie에서 유저 기본 정보를 불러옵니다
+    public UserProfileResponseDTO getUserProfile(@AuthenticationPrincipal User user) {
         logger.info(user.toString());
-
-        // UserServie에서 유저 기본 정보를 불러옵니다
-        return UserProfileReponseDTO.builder()
-                .name(user.getName())
-                .userId(user.getUid())
-                .birthDay(user.getBirthDay())
-                .description(user.getDesctiption())
-                .email(user.getEmail())
-                .profileUrl(user.getProfileImgUrl())
-                .build();
+        UserProfileResponseDTO userProfileResponseDTO=userProfileService.getUserProfile(user);
+        return userProfileResponseDTO;
 
 
 
