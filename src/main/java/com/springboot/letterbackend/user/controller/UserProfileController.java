@@ -72,4 +72,12 @@ public class UserProfileController {
 
     }
 
+    // 마이페이지 정보를 수정합니다
+    //accessToken 을 보내주세요
+    @RequestMapping(value = "/edit",method = {RequestMethod.PUT,RequestMethod.PATCH})
+    public UserProfileResponseDTO editUserProfile(@RequestBody UserProfileRequestDTO requstDTO, @AuthenticationPrincipal User user) {
+        UserProfileResponseDTO userProfileResponseDTO =userProfileService.editUserProfile(requstDTO,user);
+        return userProfileResponseDTO;
+    }
+
 }
