@@ -9,12 +9,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserProfileReponseDTO {
+public class UserProfileRequestDTO {
     String name;
     String userId;
     String email;
     LocalDate birthDay;
     String description;
     String profileUrl;
-    //String password;
+    String password;
 }
