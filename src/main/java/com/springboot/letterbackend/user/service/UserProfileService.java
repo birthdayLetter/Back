@@ -6,7 +6,7 @@ import com.springboot.letterbackend.user.dto.UserProfileRequestDTO;
 
 public interface UserProfileService {
     //유저 기본정보를 불러오는 서비스
-    UserProfileResponseDTO getUserProfile();
+    UserProfileResponseDTO getUserProfile(User user);
 
     // 유저 개인 정보를 수정하는 서비스
     UserProfileResponseDTO editUserProfile(UserProfileRequestDTO userProfileReponseDTO, User user);
