@@ -81,7 +81,7 @@ public class SiginServiceImpl implements SignService {
         LOGGER.info("패스워드 일치");
         LOGGER.info("SignInResultDto객체 생성");
         SignInResultDto signInResultDto= SignInResultDto.builder()
-                .token(jwtTokenProvider.craftToken(String.valueOf(user.getUid()), user.getRoles()))
+                .token(jwtTokenProvider.craftToken(String.valueOf(user.getEmail()), user.getRoles()))
                 .build();
 
         LOGGER.info("SignInResiltDto 객체에 값 주입");
