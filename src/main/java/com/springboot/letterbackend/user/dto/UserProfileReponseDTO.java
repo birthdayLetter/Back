@@ -1,7 +1,20 @@
 package com.springboot.letterbackend.user.dto;
 
-import lombok.Getter;
+import lombok.*;
 
+import java.time.LocalDate;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserProfileReponseDTO {
+    String name;
+    String userId;
+    String email;
+    LocalDate birthDay;
+    String description;
+    String profileUrl;
+    //String password;
 }
