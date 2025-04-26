@@ -39,9 +39,9 @@ public class JwtTokenProvider {
         secretKey= Base64.getEncoder().encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
 
     }
-    public String craftToken(String userUid, List<String> roles){
+    public String craftToken(String userEmail, List<String> roles){
         LOGGER.info("[createToken] 토큰 생성 시작");
-        Claims claims = Jwts.claims().setSubject(userUid);
+        Claims claims = Jwts.claims().setSubject(userEmail);
         claims.put("roles", roles);
         Date now = new Date();
 
@@ -58,12 +58,12 @@ public class JwtTokenProvider {
 
     public Authentication getAuthentication(String token){
         LOGGER.info("[getAuthentication] 토큰 인증 정보 조회 시작");
-        UserDetails userDetails=userDetailsService.loadUserByUsername(this.getUsername(token));
+        UserDetails userDetails=userDetailsService.loadUserByUsername(this.getUserEmail(token));
         LOGGER.info("[getAuthentication] 토큰 인증 정보 초회 완료, Userdetails UserName:{}",userDetails.getUsername());
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public String getUsername(String token){
+    public String getUserEmail(String token){
         LOGGER.info("[getUsername] 토큰 기반 회원 구별 정보 추출");
         String info=Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
 
