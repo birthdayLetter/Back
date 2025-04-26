@@ -20,8 +20,11 @@ public class UserProfileserviceImpl implements UserProfileService {
 
 
     @Override
-    public UserProfileResponseDTO getUserProfile() {
-        return null;
+    public UserProfileResponseDTO getUserProfile(User user) {
+        UserProfileResponseDTO userProfileResponseDTO = new UserProfileResponseDTO(user);
+        return userProfileResponseDTO;
+
+
     }
 
     @Override
