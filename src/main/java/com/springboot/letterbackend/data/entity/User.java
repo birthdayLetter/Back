@@ -54,6 +54,20 @@ public class User implements UserDetails {
     private List<String> roles = new ArrayList<>();
 
 
+
+    User(User findMember) {
+        setId(findMember.getId());
+        setName(findMember.getName());
+        setEmail(findMember.getEmail());
+        setPassword(findMember.getPassword());
+        setProfileImgUrl(findMember.getProfileImgUrl());
+        setBirthDay(findMember.getBirthDay());
+        setDesctiption(findMember.getDesctiption());
+        setRoles(findMember.getRoles());
+    } //memberMedtails를 만드는 로직이다 !
+
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
