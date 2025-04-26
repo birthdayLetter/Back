@@ -1,11 +1,13 @@
 package com.springboot.letterbackend.user.service.impl;
 
+import com.springboot.letterbackend.data.entity.User;
 import com.springboot.letterbackend.data.repository.FriendRepository;
 import com.springboot.letterbackend.data.repository.LetterRepository;
 import com.springboot.letterbackend.data.repository.UserRepository;
-import com.springboot.letterbackend.user.dto.UserProfileReponseDTO;
+import com.springboot.letterbackend.user.dto.UserProfileResponseDTO;
+import com.springboot.letterbackend.user.dto.UserProfileRequestDTO;
 import com.springboot.letterbackend.user.service.UserProfileService;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,10 +16,29 @@ public class UserProfileserviceImpl implements UserProfileService {
     private UserRepository userRepository;
     private LetterRepository letterRepository;
     private FriendRepository friendRepository;
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
-    public UserProfileReponseDTO getUserProfile() {
+    public UserProfileResponseDTO getUserProfile() {
         return null;
+    }
+
+    @Override
+    public UserProfileResponseDTO editUserProfile(UserProfileRequestDTO userProfileRequestDTO, User user) {
+
+        //edit profile info
+        user.setBirthDay(userProfileRequestDTO.getBirthDay());
+        user.setName(userProfileRequestDTO.getName());
+        user.setDesctiption(userProfileRequestDTO.getDescription());
+        user.setUid(userProfileRequestDTO.getUserId());
+        user.setProfileImgUrl(userProfileRequestDTO.getProfileUrl());
+        user.setPassword(passwordEncoder.encode(userProfileRequestDTO.getPassword()));
+
+        // update profile info
+        userRepository.save(user);
+        //
+        UserProfileResponseDTO userProfileResponseDTO = new UserProfileResponseDTO(user);
+        return userProfileResponseDTO;
     }
 }
