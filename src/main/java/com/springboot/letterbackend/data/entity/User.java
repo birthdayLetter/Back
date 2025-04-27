@@ -45,7 +45,7 @@ public class User implements UserDetails {
     @Column(nullable = true)
     private String profileImgUrl;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     LocalDate birthDay;
 
 
