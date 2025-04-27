@@ -3,6 +3,7 @@ package com.springboot.letterbackend.user.controller;
 import com.springboot.letterbackend.data.entity.User;
 import com.springboot.letterbackend.user.dto.UserProfileResponseDTO;
 import com.springboot.letterbackend.user.dto.UserProfileRequestDTO;
+import com.springboot.letterbackend.user.service.CheckService;
 import com.springboot.letterbackend.user.service.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -29,11 +30,13 @@ public class UserProfileController {
 
     private final Logger logger = LoggerFactory.getLogger(UserProfileController.class);
     private final UserProfileService userProfileService;
+    private final CheckService checkService;
 
 
 
-    public UserProfileController(UserProfileService userProfileService) {
+    public UserProfileController(UserProfileService userProfileService, CheckService checkService) {
         this.userProfileService = userProfileService;
+        this.checkService = checkService;
     }
 
 
@@ -66,6 +69,11 @@ public class UserProfileController {
     public UserProfileResponseDTO editUserProfile(@RequestBody UserProfileRequestDTO requstDTO, @AuthenticationPrincipal User user) {
         UserProfileResponseDTO userProfileResponseDTO =userProfileService.editUserProfile(requstDTO,user);
         return userProfileResponseDTO;
+    }
+
+    @PostMapping(value = "/auth")
+    public boolean authPassword(@RequestBody String password,@AuthenticationPrincipal User user) {
+        return checkService.CheckPassword(password,user);
     }
 
 }
