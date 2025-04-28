@@ -82,22 +82,49 @@ public class KakaoSignServiceImpl implements SignService {
         return accessToken;
     }
 
-    public String getUserInfo(String accessToken){
+    public SignUpResultDto sign(String code){
+        String accessToken=getAccessToken(code);
+        logger.info("accessToken:{}",accessToken);
+        KakaoResponseDTO kakaoResponseDTO=getUserInfo(accessToken);
+        boolean isExisted=checkService.CheckEmail(kakaoResponseDTO.getEmail());
+        SignUpResultDto signUpResultDto=new SignUpResultDto();
+
+        if(isExisted){
+            User user=userRepository.getByEmail(kakaoResponseDTO.getEmail());
+            if(user.getRoles().contains(KAKAO)){
+                // 가입된 유저가 카카오를 통해가입된 유저라면 로그인을 진행합니다.
+                signUpResultDto=signIn(user.getEmail(),"");
+            }else{
+                //아니라면 중복됬다는 메시지를 보냅니다.
+                setDuplicatedResult(signUpResultDto);
+            }
+        }else{
+            //회원가입을 진햅하고, 로그인값을 반환합니다.
+            signUp(kakaoResponseDTO.getEmail(),"",kakaoResponseDTO.getName(),kakaoResponseDTO.getProfileImg(),null);
+            signUpResultDto=signIn(kakaoResponseDTO.getEmail(),"");
+        }
+
+        return signUpResultDto;
+    }
+
+    public KakaoResponseDTO getUserInfo(String accessToken){
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders= new HttpHeaders();
         httpHeaders.set("Authorization", "Bearer " + accessToken);
-        httpHeaders.set("Content-Type", "application/json");
+        httpHeaders.set("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
         HttpEntity entity = new HttpEntity(httpHeaders);
+        JsonNode response=restTemplate.exchange("https://kapi.kakao.com/v2/user/me", HttpMethod.GET,entity,JsonNode.class).getBody();
+        logger.info(response.toString());
+        String name=response.findValue("kakao_account").findValue("nickname").asText();
+        logger.info(name);
+        String profileImgUrl=response.findValue("kakao_account").findValue("profile_image_url").asText();
+        boolean hasEmail=response.findValue("kakao_account").findValue("has_email").asBoolean();
+        boolean isEmailValid=response.findValue("kakao_account").findValue("is_email_valid").asBoolean();
+        boolean isEmailVerified=response.findValue("kakao_account").findValue("is_email_verified").asBoolean();
+        String email=setKakaoEmail(response,hasEmail,isEmailValid,isEmailVerified);
 
-        JsonNode response=restTemplate.exchange(kakapAPI, HttpMethod.GET,entity,JsonNode.class).getBody();
-        String nickname = response.get("kakao_account").get("profile").get("nickname").asText();
-        String thumbNailUrl = response.get("kakao_account").get("profile").get("thumbnail_image_url").asText();
-        String email = response.get("kakao_account").get("email").asText();
-        String name = response.get("kakao_account").get("name").asText();
-        String birthDay = response.get("kakao_account").get("birthday").asText();
-        String id = response.get("id").asText();
-
-        logger.info("카카오 api를 통해 개인정보를 불러오는 데 성공했습니다. 생일 :{}",birthDay);
+        KakaoResponseDTO kakaoResponseDTO=new KakaoResponseDTO(name,email,profileImgUrl);
+        return kakaoResponseDTO;
 
         return null;
     }
