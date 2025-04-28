@@ -53,6 +53,10 @@ public class User implements UserDetails {
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "target_user_id",referencedColumnName = "id")
+    private List<Friend> friendList= new ArrayList<>();
+
 
 
     User(User findMember) {
