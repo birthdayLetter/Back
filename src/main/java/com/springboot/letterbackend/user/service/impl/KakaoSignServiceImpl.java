@@ -33,7 +33,7 @@ import static com.springboot.letterbackend.data.entity.LoginMethod.KAKAO;
 @Service
 public class KakaoSignServiceImpl implements SignService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    public UserRepository userRepository;
+    public final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final CheckService checkService;
 
@@ -43,7 +43,8 @@ public class KakaoSignServiceImpl implements SignService {
     @Value("kakao.userinfo.api")
     private String kakapAPI;
 
-    public KakaoSignServiceImpl(JwtTokenProvider jwtTokenProvider, PasswordEncoder passwordEncoder) {
+    public KakaoSignServiceImpl(UserRepository userRepository, JwtTokenProvider jwtTokenProvider, CheckService checkService, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.jwtTokenProvider = jwtTokenProvider;
         this.checkService = checkService;
         this.passwordEncoder = passwordEncoder;
