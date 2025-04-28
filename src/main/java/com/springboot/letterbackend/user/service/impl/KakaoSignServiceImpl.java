@@ -3,12 +3,12 @@ package com.springboot.letterbackend.user.service.impl;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.springboot.letterbackend.common.CommonResponse;
 import com.springboot.letterbackend.config.security.JwtTokenProvider;
-import com.springboot.letterbackend.data.entity.LoginMethod;
 import com.springboot.letterbackend.data.entity.User;
 import com.springboot.letterbackend.data.repository.UserRepository;
-import com.springboot.letterbackend.user.dto.KakaoRequestBody;
+import com.springboot.letterbackend.user.dto.KakaoResponseDTO;
 import com.springboot.letterbackend.user.dto.SignInResultDto;
 import com.springboot.letterbackend.user.dto.SignUpResultDto;
+import com.springboot.letterbackend.user.service.CheckService;
 import com.springboot.letterbackend.user.service.SignService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +19,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
@@ -62,14 +64,19 @@ public class KakaoSignServiceImpl implements SignService {
     }
 
     public String getAccessToken(String code){
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type","authorization_code");
+        params.add("client_id","e140120f18ebca253dc9456e7b42857e");
+        params.add("code",code);
+        params.add("redirect_uri","http://localhost:8080/sign-api/kakao/oauth");
+
+
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders= new HttpHeaders();
-        //바디에 값 집어넣기
-        KakaoRequestBody body=new KakaoRequestBody();
-        body.setCode(code);
-        httpHeaders.add("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
-        HttpEntity<KakaoRequestBody> request = new HttpEntity<>(body, httpHeaders);
-        JsonNode response=restTemplate.postForEntity("https://kakao.com/oauth/token",request, JsonNode.class).getBody();
+        httpHeaders.set("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, httpHeaders);
+
+        JsonNode response=restTemplate.exchange("https://kauth.kakao.com/oauth/token",HttpMethod.POST,entity, JsonNode.class).getBody();
         String accessToken=response.get("access_token").asText();
 
         return accessToken;
