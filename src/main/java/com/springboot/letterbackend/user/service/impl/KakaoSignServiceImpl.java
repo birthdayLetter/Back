@@ -35,6 +35,7 @@ public class KakaoSignServiceImpl implements SignService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     public UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final CheckService checkService;
 
 
     public PasswordEncoder passwordEncoder;
@@ -44,6 +45,7 @@ public class KakaoSignServiceImpl implements SignService {
 
     public KakaoSignServiceImpl(JwtTokenProvider jwtTokenProvider, PasswordEncoder passwordEncoder) {
         this.jwtTokenProvider = jwtTokenProvider;
+        this.checkService = checkService;
         this.passwordEncoder = passwordEncoder;
     }
 
