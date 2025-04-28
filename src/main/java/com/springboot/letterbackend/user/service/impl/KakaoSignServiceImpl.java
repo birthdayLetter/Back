@@ -41,7 +41,7 @@ public class KakaoSignServiceImpl implements SignService {
     public PasswordEncoder passwordEncoder;
 
     @Value("kakao.userinfo.api")
-    private String kakapAPI;
+    private String kakapAPI="https://kapi.kakao.com/v2/user/me";
 
     public KakaoSignServiceImpl(UserRepository userRepository, JwtTokenProvider jwtTokenProvider, CheckService checkService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
