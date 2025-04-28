@@ -79,7 +79,8 @@ public class KakaoSignServiceImpl implements SignService {
 
         if(isExisted){
             User user=userRepository.getByEmail(kakaoResponseDTO.getEmail());
-            if(user.getRoles().contains(KAKAO)){
+            logger.info("user:{}",user.getRoles());
+            if(user.getRoles().contains(String.valueOf(KAKAO))){
                 // 가입된 유저가 카카오를 통해가입된 유저라면 로그인을 진행합니다.
                 signUpResultDto=signIn(user.getEmail(),"");
             }else{
