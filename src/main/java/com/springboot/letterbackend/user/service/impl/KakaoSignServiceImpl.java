@@ -24,10 +24,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.UUID;
-import com.springboot.letterbackend.data.entity.LoginMethod.*;
 
 import static com.springboot.letterbackend.data.entity.LoginMethod.KAKAO;
 
@@ -52,16 +50,6 @@ public class KakaoSignServiceImpl implements SignService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // 인가코드를 받기
-
-    //토큰 받기
-    public String signKakao(String code){
-        //1. code로 post 신호 보내서 access Token 가져오기
-        String acceaaToken=getAccessToken(code);
-        //2. accessToken으로 유저 아이디 가져오기
-        getUserInfo(acceaaToken);
-        return null;
-    }
 
     public String getAccessToken(String code){
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
@@ -126,37 +114,29 @@ public class KakaoSignServiceImpl implements SignService {
         KakaoResponseDTO kakaoResponseDTO=new KakaoResponseDTO(name,email,profileImgUrl);
         return kakaoResponseDTO;
 
-        return null;
     }
 
-    public  String signUpOrSignIn(){
-        boolean isExsited=IsExistedUser("");
-        if(isExsited){
-            //signUp("","","","");
-        }else{
-            //signIn("","");
+
+    public String setKakaoEmail(JsonNode response, boolean hasEmail, boolean isEmailValid, boolean isEmailVerified){
+        String kakaoEmail=null;
+        if(hasEmail&&isEmailValid&&isEmailVerified){
+            kakaoEmail=response.get("kakao_account").get("email").asText();
         }
-        return null;
-    }
-
-    // 이미 가입한 유저인지 아닌지 검사
-    // 이걸 어떻게 검사해야하는지 감이 안옴.
-    public boolean IsExistedUser(String username){
-
-        return false;
+        return kakaoEmail;
     }
 
 
-    // 카카오 정보로 회원가입을 진행합니다
+
+
     @Override
-    public SignUpResultDto signUp(String id, String password, String name,String url, LocalDate birthday) {
-       logger.info("카카오 정보를 기반으로 회원가입을 진행합니다.");
+    public SignUpResultDto signUp(String id, String password, String name, String url, LocalDate birthday) {
         User user;
         user=User.builder()
-                .uid(String.valueOf(UUID.fromString(id)).substring(0,8)) //임시로 만든다음에 나중에 수정하도록한다. 8자리로 한정함
+                .uid(UUID.randomUUID().toString().substring(0,8)) //임시로 만든다음에 나중에 수정하도록한다. 8자리로 한정함
                 .password("")
                 .profileImgUrl(url)
                 .name(name)
+                .email(id)
                 .roles(Collections.singletonList(String.valueOf(KAKAO)))
                 .build();
         User savedUser=userRepository.save(user);
@@ -176,16 +156,11 @@ public class KakaoSignServiceImpl implements SignService {
     @Override
     public SignInResultDto signIn(String id, String password) throws RuntimeException {
         logger.info("signDataHandler로 회원정보 요청");
-        User user=userRepository.getByUid(id);
+        User user=userRepository.getByEmail(id);
         logger.info("id"+id);
-        logger.info("패스워드 비교 수행");
-        if(!passwordEncoder.matches(password,user.getPassword())){
-            throw new RuntimeException();
-        }
-        logger.info("패스워드 일치");
-        logger.info("SignInResultDto객체 생성");
+
         SignInResultDto signInResultDto= SignInResultDto.builder()
-                .token(jwtTokenProvider.craftToken(String.valueOf(user.getUid()), user.getRoles()))
+                .token(jwtTokenProvider.craftToken(String.valueOf(user.getEmail()), user.getRoles()))
                 .build();
 
         logger.info("SignInResiltDto 객체에 값 주입");
@@ -193,6 +168,8 @@ public class KakaoSignServiceImpl implements SignService {
 
         return signInResultDto;
     }
+
+
 
     private void setSuccessResult(SignUpResultDto signUpResultDto) {
         signUpResultDto.setSuccess(true);
@@ -205,4 +182,12 @@ public class KakaoSignServiceImpl implements SignService {
         signUpResultDto.setMsg(CommonResponse.FAIL.getMsg());
 
     }
+
+    private void setDuplicatedResult(SignUpResultDto signUpResultDto) {
+        signUpResultDto.setSuccess(false);
+        signUpResultDto.setCode(CommonResponse.DUPLICATED.getCode());
+        signUpResultDto.setMsg(CommonResponse.DUPLICATED.getMsg());
+
+    }
+
 }
