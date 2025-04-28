@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                                 "/swagger-ui/index.html/**", // 일부 환경에서 필요
                                 "/swagger-resources/**",
                                 "/webjars/**").permitAll());
-        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/sign-api/sign-in","/sign-api/sign-up","/sign-api/kakao/**","/sign-api/exception","/sign-api/check/email").permitAll());
+        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/sign-api/sign-in","/sign-api/sign-up","/sign-api/kakao/**","/sign-api/exception","/sign-api/check/email","/friend/**").permitAll());
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/ws/**", "/app/**", "/friend/**", "/letter/**","/ws-stomp/**","/sub/**","/pub/**").permitAll());
@@ -40,7 +40,7 @@ public class SecurityConfiguration {
 
         http.authorizeHttpRequests(authorizeRequests ->authorizeRequests.requestMatchers("/product/**").permitAll());
         http.authorizeHttpRequests(authorizeRequest-> authorizeRequest.requestMatchers("**exception**").permitAll());
-        http.authorizeHttpRequests(authorizeRequest-> authorizeRequest.anyRequest().hasRole("ADMIN"));
+        http.authorizeHttpRequests(authorizeRequest-> authorizeRequest.anyRequest().authenticated());
         http.sessionManagement(sessionManagement->sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.httpBasic(httpBasicBuilder -> httpBasicBuilder.disable());
         http.rememberMe(rememberMe->rememberMe.key("security").rememberMeParameter("rememberMe").tokenValiditySeconds(60*60*24*30));
