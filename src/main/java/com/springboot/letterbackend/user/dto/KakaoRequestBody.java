@@ -13,7 +13,7 @@ public class KakaoRequestBody {
     String grantType="authorization_code";
     @Value("kakao.rest_api_key")
     @JsonProperty("cilent_id")
-    String clientId;
+    String clientId="e140120f18ebca253dc9456e7b42857e";
     @JsonProperty("redirect_uri")
     String redirectUri;
     String code;
