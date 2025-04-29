@@ -20,15 +20,12 @@ public class UserProfileResponseDTO {
     //String password;
 
     public UserProfileResponseDTO(User user) {
-         UserProfileResponseDTO.builder()
-                .userId(user.getUid())
-                .name(user.getName())
-                .email(user.getEmail())
-                .birthDay(user.getBirthDay())
-                .description(user.getDesctiption())
-                .profileUrl(user.getProfileImgUrl())
-                .build();
-
+         this.name=user.getName();
+         this.userId=user.getUid();
+         this.email=user.getEmail();
+         this.birthDay=user.getBirthDay();
+         this.description=user.getDesctiption();
+         this.profileUrl=user.getProfileImgUrl();
     }
 
 }
