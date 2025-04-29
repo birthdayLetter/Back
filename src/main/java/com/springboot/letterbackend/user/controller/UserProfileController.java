@@ -1,6 +1,7 @@
 package com.springboot.letterbackend.user.controller;
 
 import com.springboot.letterbackend.data.entity.User;
+import com.springboot.letterbackend.user.dto.AuthRequestDTO;
 import com.springboot.letterbackend.user.dto.UserProfileResponseDTO;
 import com.springboot.letterbackend.user.dto.UserProfileRequestDTO;
 import com.springboot.letterbackend.user.service.CheckService;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -73,8 +75,16 @@ public class UserProfileController {
     }
 
     @PostMapping(value = "/auth")
-    public boolean authPassword(@RequestBody String password,@AuthenticationPrincipal User user) {
-        return checkService.CheckPassword(password,user);
+    public ResponseEntity<?> authPassword(@RequestBody AuthRequestDTO authRequestDTO, @AuthenticationPrincipal User user) {
+        boolean flag= checkService.CheckPassword(authRequestDTO.getPassword(),user);
+        logger.info(user.getEmail());
+        logger.info("flag:"+flag);
+        if(flag){
+            ResponseEntity<?> responseEntity = ResponseEntity.ok().build();
+            return responseEntity;
+
+        }
+        return ResponseEntity.badRequest().build();
     }
 
 }
