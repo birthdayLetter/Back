@@ -1,6 +1,7 @@
 package com.springboot.letterbackend.data.entity;
 
 
+import com.springboot.letterbackend.common.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
