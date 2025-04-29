@@ -70,19 +70,20 @@ public class KakaoSignServiceImpl implements SignService {
         return accessToken;
     }
 
-    public SignUpResultDto sign(String code){
+    public SignInResultDto sign(String code){
         String accessToken=getAccessToken(code);
         logger.info("accessToken:{}",accessToken);
         KakaoResponseDTO kakaoResponseDTO=getUserInfo(accessToken);
         boolean isExisted=checkService.CheckEmail(kakaoResponseDTO.getEmail());
         SignUpResultDto signUpResultDto=new SignUpResultDto();
+        SignInResultDto signInResultDto=new SignInResultDto();
 
         if(isExisted){
             User user=userRepository.getByEmail(kakaoResponseDTO.getEmail());
             logger.info("user:{}",user.getRoles());
             if(user.getRoles().contains(String.valueOf(KAKAO))){
                 // 가입된 유저가 카카오를 통해가입된 유저라면 로그인을 진행합니다.
-                signUpResultDto=signIn(user.getEmail(),"");
+                signInResultDto=signIn(user.getEmail(),"");
             }else{
                 //아니라면 중복됬다는 메시지를 보냅니다.
                 setDuplicatedResult(signUpResultDto);
@@ -90,10 +91,10 @@ public class KakaoSignServiceImpl implements SignService {
         }else{
             //회원가입을 진햅하고, 로그인값을 반환합니다.
             signUp(kakaoResponseDTO.getEmail(),"",kakaoResponseDTO.getName(),kakaoResponseDTO.getProfileImg(),null);
-            signUpResultDto=signIn(kakaoResponseDTO.getEmail(),"");
+            signInResultDto=signIn(kakaoResponseDTO.getEmail(),"");
         }
 
-        return signUpResultDto;
+        return signInResultDto;
     }
 
     public KakaoResponseDTO getUserInfo(String accessToken){
