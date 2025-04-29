@@ -48,14 +48,17 @@ public class User implements UserDetails {
     @Column(nullable = true)
     LocalDate birthDay;
 
-
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "target_user_id",referencedColumnName = "id")
-    private List<Friend> friendList= new ArrayList<>();
+    @OneToMany(mappedBy = "toUser", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Friend> friendList= new ArrayList<>(); // 신청받은 친구목록
+
+    @OneToMany(mappedBy = "fromUser", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Friend> appliedUserList= new ArrayList<>(); //친구신청한 유저 목록
 
 
 
