@@ -1,8 +1,8 @@
 package com.springboot.letterbackend.user.service;
 
 import com.springboot.letterbackend.data.entity.User;
-import com.springboot.letterbackend.user.dto.UserProfileResponseDTO;
-import com.springboot.letterbackend.user.dto.UserProfileRequestDTO;
+import com.springboot.letterbackend.user.dto.response.UserProfileResponseDTO;
+import com.springboot.letterbackend.user.dto.request.UserProfileRequestDTO;
 
 public interface UserProfileService {
     //유저 기본정보를 불러오는 서비스

@@ -1,9 +1,9 @@
 package com.springboot.letterbackend.user.controller;
 
 import com.springboot.letterbackend.data.entity.User;
-import com.springboot.letterbackend.user.dto.AuthRequestDTO;
-import com.springboot.letterbackend.user.dto.UserProfileResponseDTO;
-import com.springboot.letterbackend.user.dto.UserProfileRequestDTO;
+import com.springboot.letterbackend.user.dto.request.AuthRequestDTO;
+import com.springboot.letterbackend.user.dto.response.UserProfileResponseDTO;
+import com.springboot.letterbackend.user.dto.request.UserProfileRequestDTO;
 import com.springboot.letterbackend.user.service.CheckService;
 import com.springboot.letterbackend.user.service.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -73,6 +73,7 @@ public class UserProfileController {
         UserProfileResponseDTO userProfileResponseDTO =userProfileService.editUserProfile(requstDTO,user);
         return userProfileResponseDTO;
     }
+
 
     @PostMapping(value = "/auth")
     public ResponseEntity<?> authPassword(@RequestBody AuthRequestDTO authRequestDTO, @AuthenticationPrincipal User user) {

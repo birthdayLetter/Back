@@ -1,8 +1,8 @@
 package com.springboot.letterbackend.user.controller;
 
 
-import com.springboot.letterbackend.user.dto.SignInResultDto;
-import com.springboot.letterbackend.user.dto.SignUpResultDto;
+import com.springboot.letterbackend.user.dto.response.SignInResultDto;
+import com.springboot.letterbackend.user.dto.response.SignUpResultDto;
 import com.springboot.letterbackend.user.service.CheckService;
 import com.springboot.letterbackend.user.service.impl.ProfileServiceImpl;
 import com.springboot.letterbackend.user.service.SignService;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 

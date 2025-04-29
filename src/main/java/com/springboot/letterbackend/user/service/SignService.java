@@ -1,11 +1,10 @@
 package com.springboot.letterbackend.user.service;
 
 
-import com.springboot.letterbackend.user.dto.SignInResultDto;
-import com.springboot.letterbackend.user.dto.SignUpResultDto;
+import com.springboot.letterbackend.user.dto.response.SignInResultDto;
+import com.springboot.letterbackend.user.dto.response.SignUpResultDto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public interface SignService {
     SignUpResultDto signUp(String id, String password, String name, String url, LocalDate birthday);

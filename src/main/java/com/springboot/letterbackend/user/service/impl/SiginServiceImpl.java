@@ -2,8 +2,8 @@ package com.springboot.letterbackend.user.service.impl;
 
 
 import com.springboot.letterbackend.config.security.JwtTokenProvider;
-import com.springboot.letterbackend.user.dto.SignInResultDto;
-import com.springboot.letterbackend.user.dto.SignUpResultDto;
+import com.springboot.letterbackend.user.dto.response.SignInResultDto;
+import com.springboot.letterbackend.user.dto.response.SignUpResultDto;
 import com.springboot.letterbackend.data.entity.User;
 import com.springboot.letterbackend.data.repository.UserRepository;
 import com.springboot.letterbackend.user.service.SignService;
@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.UUID;
 
-import static com.springboot.letterbackend.data.entity.LoginMethod.GENERAL;
+import static com.springboot.letterbackend.common.LoginMethod.GENERAL;
 
 
 @Service

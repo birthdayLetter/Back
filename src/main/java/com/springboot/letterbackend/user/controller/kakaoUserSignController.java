@@ -1,21 +1,15 @@
 package com.springboot.letterbackend.user.controller;
 
-import com.springboot.letterbackend.common.CommonResponse;
-import com.springboot.letterbackend.data.entity.User;
-import com.springboot.letterbackend.user.dto.KakaoResponseDTO;
-import com.springboot.letterbackend.user.dto.KakaoSinupRedirectResPonseDTO;
-import com.springboot.letterbackend.user.dto.SignInResultDto;
-import com.springboot.letterbackend.user.dto.SignUpResultDto;
+import com.springboot.letterbackend.user.dto.response.KakaoSinupRedirectResPonseDTO;
+import com.springboot.letterbackend.user.dto.response.SignInResultDto;
 import com.springboot.letterbackend.user.service.impl.CheckServiceImpl;
 import com.springboot.letterbackend.user.service.impl.KakaoSignServiceImpl;
 
 import com.springboot.letterbackend.user.service.impl.UserDetailsServiceImpl;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
