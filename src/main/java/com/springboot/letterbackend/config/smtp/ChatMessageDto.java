@@ -1,4 +1,4 @@
-package com.springboot.letterbackend.config;
+package com.springboot.letterbackend.config.smtp;
 
 import lombok.Data;
 

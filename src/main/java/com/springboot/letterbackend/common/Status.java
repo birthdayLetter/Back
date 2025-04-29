@@ -1,4 +1,4 @@
-package com.springboot.letterbackend.data.entity;
+package com.springboot.letterbackend.common;
 
 public enum Status {
     PENDING,

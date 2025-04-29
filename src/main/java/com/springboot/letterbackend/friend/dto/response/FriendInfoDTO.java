@@ -1,4 +1,4 @@
-package com.springboot.letterbackend.friend.dto;
+package com.springboot.letterbackend.friend.dto.response;
 
 import com.springboot.letterbackend.data.entity.User;
 import lombok.AllArgsConstructor;

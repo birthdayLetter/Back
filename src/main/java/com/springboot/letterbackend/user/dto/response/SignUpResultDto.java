@@ -1,4 +1,4 @@
-package com.springboot.letterbackend.user.dto;
+package com.springboot.letterbackend.user.dto.response;
 
 import com.springboot.letterbackend.common.CommonResponse;
 import lombok.AllArgsConstructor;

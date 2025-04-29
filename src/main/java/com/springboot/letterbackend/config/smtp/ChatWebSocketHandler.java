@@ -1,4 +1,4 @@
-package com.springboot.letterbackend.config;
+package com.springboot.letterbackend.config.smtp;
 
 import com.springboot.letterbackend.data.entity.User;
 import org.springframework.security.core.Authentication;
@@ -9,8 +9,6 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -38,7 +36,8 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         System.out.println("[+] afterConnectionEstablished :: " + session.getId());
         //커넥션이 연결되면 유저 ID를 가져와야함.
-        clientSession.put("seon", session);
+       // clientSession.put(userId, session);
+        String uid=getPrincipalId(session);
         clientSession.put(session.getId(), session);
     }
 

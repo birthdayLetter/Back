@@ -1,6 +1,5 @@
-package com.springboot.letterbackend.user.dto;
+package com.springboot.letterbackend.user.dto.request;
 
-import jakarta.persistence.GeneratedValue;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,4 +1,4 @@
-package com.springboot.letterbackend.user.dto;
+package com.springboot.letterbackend.user.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

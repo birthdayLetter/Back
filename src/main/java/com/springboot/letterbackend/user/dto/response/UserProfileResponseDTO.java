@@ -1,4 +1,4 @@
-package com.springboot.letterbackend.user.dto;
+package com.springboot.letterbackend.user.dto.response;
 
 import com.springboot.letterbackend.data.entity.User;
 import lombok.*;

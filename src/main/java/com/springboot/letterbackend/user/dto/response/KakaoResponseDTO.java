@@ -1,6 +1,5 @@
-package com.springboot.letterbackend.user.dto;
+package com.springboot.letterbackend.user.dto.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
