@@ -51,12 +51,19 @@ public class kakaoUserSignController {
     }
 
     @GetMapping("/oauth")
-    public SignUpResultDto getUserInfo(@RequestParam("code") String code){
+    public ResponseEntity<Void> getUserInfo(@RequestParam("code") String code, HttpSession session){
         logger.info("code:"+code);
         //1. 유저정보를 가져옴
-        SignUpResultDto signUpResultDto=kakaoSignServiceImpl.sign(code);
+        SignInResultDto signInResultDto=kakaoSignServiceImpl.sign(code);
 
-        return signUpResultDto;
+        // 세션에 토큰 저장
+        logger.info(signInResultDto.getToken());
+        session.setAttribute("OAUTH_TOKEN", signInResultDto.getToken());
+
+        // 클라이언트를 프론트엔드 콜백 URL로 리다이렉트
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("http://localhost:3000/oauth/callback")); // 예시 프론트 URL
+        return new ResponseEntity<>(headers, HttpStatus.FOUND); // 302 리다이렉트
     }
 
 }
