@@ -11,14 +11,20 @@ import com.springboot.letterbackend.user.service.impl.KakaoSignServiceImpl;
 
 import com.springboot.letterbackend.user.service.impl.UserDetailsServiceImpl;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/sign-api/kakao")
@@ -65,5 +71,18 @@ public class kakaoUserSignController {
         headers.setLocation(URI.create("http://localhost:3000/oauth/callback")); // 예시 프론트 URL
         return new ResponseEntity<>(headers, HttpStatus.FOUND); // 302 리다이렉트
     }
+
+
+    @GetMapping("/auth/oauth-token")
+    public SignInResultDto getOAuthToken(HttpSession session) {
+        String token = (String) session.getAttribute("OAUTH_TOKEN");
+        logger.info("세션에서 가져온 토큰"+token);
+
+        SignInResultDto resultDto = new SignInResultDto();
+        resultDto.setToken(token);
+        return resultDto;
+    }
+
+
 
 }
