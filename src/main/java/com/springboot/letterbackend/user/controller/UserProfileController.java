@@ -54,8 +54,9 @@ public class UserProfileController {
     })
     @GetMapping(value = "/")// UserServie에서 유저 기본 정보를 불러옵니다
     public UserProfileResponseDTO getUserProfile(@AuthenticationPrincipal User user) {
-        logger.info(user.toString());
+        logger.info(user.getEmail());
         UserProfileResponseDTO userProfileResponseDTO=userProfileService.getUserProfile(user);
+        logger.info(userProfileResponseDTO.getEmail());
         return userProfileResponseDTO;
 
 
