@@ -5,6 +5,7 @@ import com.springboot.letterbackend.data.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FriendRepository extends JpaRepository<Friend, Long> {
-   Friend findFriendByUserId(Long userId);
-   Friend findFriendByUserIdAndUser(Long userId, User user);
+   //Friend findFriendByUserId(Long userId);
+   Friend findFriendByFromUserIdAndToUser(Long userId, User user);
+
 }
