@@ -2,7 +2,7 @@ package com.springboot.letterbackend.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.springboot.letterbackend.user.dto.EntryPointErrorResponse;
+import com.springboot.letterbackend.user.dto.response.EntryPointErrorResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
