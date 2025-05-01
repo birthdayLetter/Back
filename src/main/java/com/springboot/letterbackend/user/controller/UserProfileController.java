@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -68,7 +69,7 @@ public class UserProfileController {
 
     // 마이페이지 정보를 수정합니다
     //accessToken 을 보내주세요
-    @RequestMapping(value = "/edit",method = {RequestMethod.PUT,RequestMethod.PATCH})
+    @RequestMapping(value = "/edit",method = {RequestMethod.PUT,RequestMethod.PATCH},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UserProfileResponseDTO editUserProfile(@RequestBody UserProfileRequestDTO requstDTO, @AuthenticationPrincipal User user) {
         UserProfileResponseDTO userProfileResponseDTO =userProfileService.editUserProfile(requstDTO,user);
         return userProfileResponseDTO;
