@@ -8,7 +8,6 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class UserProfileRequestDTO {
     String name;
@@ -16,6 +15,17 @@ public class UserProfileRequestDTO {
     String email;
     LocalDate birthDay;
     String description;
-    MultipartFile profileImg;
+    String profileImgUrl;
     String password;
+
+    public UserProfileRequestDTO(String name, String userId, String email, LocalDate birthDay,String description, String profileImgUrl, String password) {
+        this.name = name;
+        this.userId = userId;
+        this.email = email;
+        this.birthDay = birthDay;
+        this.description = description;
+        this.profileImgUrl = profileImgUrl;
+        this.password = password;
+
+    }
 }
