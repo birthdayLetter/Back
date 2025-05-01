@@ -19,8 +19,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 /**
  * 유저 프로파일 변경 관련 컨트롤러 입니다.
@@ -75,10 +77,17 @@ public class UserProfileController {
     // 마이페이지 정보를 수정합니다
     //accessToken 을 보내주세요
     @RequestMapping(value = "/edit",method = {RequestMethod.PUT,RequestMethod.PATCH},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public UserProfileResponseDTO editUserProfile(@RequestPart UserProfileRequestDTO requstDTO, @AuthenticationPrincipal User user) throws IOException {
+    public UserProfileResponseDTO editUserProfile(@RequestParam String name,
+                                                  @RequestParam String userId,
+                                                  @RequestParam String email,
+                                                  @RequestParam LocalDate birthDay,
+                                                  @RequestParam MultipartFile profileImg,
+                                                  @RequestParam String description,
+                                                  @RequestParam  String password, @AuthenticationPrincipal User user) throws IOException {
 
-        String profileImgUrl=profileService.returnProfilePath(requstDTO.getProfileImg());
-        UserProfileResponseDTO userProfileResponseDTO =userProfileService.editUserProfile(requstDTO,user,profileImgUrl);
+        String profileImgUrl=profileService.returnProfilePath(profileImg);
+        UserProfileRequestDTO requstDTO=new UserProfileRequestDTO(name,userId,email,birthDay,description,profileImgUrl,password);
+        UserProfileResponseDTO userProfileResponseDTO =userProfileService.editUserProfile(requstDTO,user);
         return userProfileResponseDTO;
     }
 
