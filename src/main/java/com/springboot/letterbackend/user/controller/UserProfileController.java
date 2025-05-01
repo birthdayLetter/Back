@@ -6,6 +6,7 @@ import com.springboot.letterbackend.user.dto.response.UserProfileResponseDTO;
 import com.springboot.letterbackend.user.dto.request.UserProfileRequestDTO;
 import com.springboot.letterbackend.user.service.CheckService;
 import com.springboot.letterbackend.user.service.UserProfileService;
+import com.springboot.letterbackend.user.service.impl.ProfileServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -18,6 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 /**
  * 유저 프로파일 변경 관련 컨트롤러 입니다.
@@ -33,12 +36,14 @@ public class UserProfileController {
 
     private final Logger logger = LoggerFactory.getLogger(UserProfileController.class);
     private final UserProfileService userProfileService;
+    private final ProfileServiceImpl profileService;
     private final CheckService checkService;
 
 
 
-    public UserProfileController(UserProfileService userProfileService, CheckService checkService) {
+    public UserProfileController(UserProfileService userProfileService, ProfileServiceImpl profileService, CheckService checkService) {
         this.userProfileService = userProfileService;
+        this.profileService = profileService;
         this.checkService = checkService;
     }
 
@@ -70,8 +75,10 @@ public class UserProfileController {
     // 마이페이지 정보를 수정합니다
     //accessToken 을 보내주세요
     @RequestMapping(value = "/edit",method = {RequestMethod.PUT,RequestMethod.PATCH},consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public UserProfileResponseDTO editUserProfile(@RequestBody UserProfileRequestDTO requstDTO, @AuthenticationPrincipal User user) {
-        UserProfileResponseDTO userProfileResponseDTO =userProfileService.editUserProfile(requstDTO,user);
+    public UserProfileResponseDTO editUserProfile(@RequestPart UserProfileRequestDTO requstDTO, @AuthenticationPrincipal User user) throws IOException {
+
+        String profileImgUrl=profileService.returnProfilePath(requstDTO.getProfileImg());
+        UserProfileResponseDTO userProfileResponseDTO =userProfileService.editUserProfile(requstDTO,user,profileImgUrl);
         return userProfileResponseDTO;
     }
 
