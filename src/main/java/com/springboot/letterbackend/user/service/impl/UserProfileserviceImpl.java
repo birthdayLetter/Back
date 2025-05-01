@@ -28,14 +28,14 @@ public class UserProfileserviceImpl implements UserProfileService {
     }
 
     @Override
-    public UserProfileResponseDTO editUserProfile(UserProfileRequestDTO userProfileRequestDTO, User user) {
+    public UserProfileResponseDTO editUserProfile(UserProfileRequestDTO userProfileRequestDTO, User user,String profileUrl) {
 
         //edit profile info
         user.setBirthDay(userProfileRequestDTO.getBirthDay());
         user.setName(userProfileRequestDTO.getName());
         user.setDesctiption(userProfileRequestDTO.getDescription());
         user.setUid(userProfileRequestDTO.getUserId());
-        user.setProfileImgUrl(userProfileRequestDTO.getProfileUrl());
+        user.setProfileImgUrl(profileUrl);
         user.setPassword(passwordEncoder.encode(userProfileRequestDTO.getPassword()));
 
         // update profile info
