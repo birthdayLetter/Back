@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Service
 public class ProfileServiceImpl {
-    private final String uploadDir="D:\\upload\\prifile\\";
+    private final String uploadDir="C:\\upload\\prifile\\";
     public String returnProfilePath(MultipartFile file) throws IOException {
 
         File directory=new File(uploadDir);
