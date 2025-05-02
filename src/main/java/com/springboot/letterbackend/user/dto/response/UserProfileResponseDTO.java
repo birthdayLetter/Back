@@ -17,7 +17,7 @@ public class UserProfileResponseDTO {
     LocalDate birthDay;
     String description;
     String profileUrl;
-    //String password;
+    String password;
 
     public UserProfileResponseDTO(User user) {
          this.name=user.getName();
@@ -26,6 +26,7 @@ public class UserProfileResponseDTO {
          this.birthDay=user.getBirthDay();
          this.description=user.getDesctiption();
          this.profileUrl=user.getProfileImgUrl();
+         this.password=user.getPassword();
     }
 
 }
