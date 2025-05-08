@@ -81,13 +81,30 @@ public class UserProfileController {
                                                   @RequestParam String userId,
                                                   @RequestParam String email,
                                                   @RequestParam LocalDate birthDay,
-                                                  @RequestParam MultipartFile profileImg,
+                                                  @RequestParam(required = false) MultipartFile profileImg,
                                                   @RequestParam String description,
-                                                  @RequestParam  String password, @AuthenticationPrincipal User user) throws IOException {
+                                                  @RequestParam  String password, @AuthenticationPrincipal User user) {
 
-        String profileImgUrl=profileService.returnProfilePath(profileImg);
-        UserProfileRequestDTO requstDTO=new UserProfileRequestDTO(name,userId,email,birthDay,description,profileImgUrl,password);
-        UserProfileResponseDTO userProfileResponseDTO =userProfileService.editUserProfile(requstDTO,user);
+        //logger.info(profileImg.getContentType());
+        //프로파일 이미지가 있으면, 이미지 저장, 아니면 변경하지 않음.
+        UserProfileResponseDTO userProfileResponseDTO;
+        try{
+
+            UserProfileRequestDTO requstDTO;
+            if(profileImg!=null){
+
+                logger.info("이미지 타입"+profileImg.getContentType());
+                String profileImgUrl=profileService.returnProfilePath(profileImg);
+                requstDTO=new UserProfileRequestDTO(name,userId,email,birthDay,description,profileImgUrl,password);
+
+
+            }else{
+                requstDTO=new UserProfileRequestDTO(name,userId,email,birthDay,description,user.getProfileImgUrl(),password);
+            }
+            userProfileResponseDTO =userProfileService.editUserProfile(requstDTO,user);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return userProfileResponseDTO;
     }
 

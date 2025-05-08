@@ -43,7 +43,13 @@ public class UserProfileserviceImpl implements UserProfileService {
         user.setDesctiption(userProfileRequestDTO.getDescription());
         user.setUid(userProfileRequestDTO.getUserId());
         user.setProfileImgUrl(userProfileRequestDTO.getProfileImgUrl());
-        user.setPassword(passwordEncoder.encode(userProfileRequestDTO.getPassword()));
+        //password가 null 값이면, 변경하지 않고, 값이 있으면 변경한다
+        if(userProfileRequestDTO.getPassword()!=null){
+            user.setPassword(passwordEncoder.encode(userProfileRequestDTO.getPassword()));
+        }else{
+            user.setPassword(user.getPassword());
+        }
+
 
         // update profile info
         userRepository.save(user);

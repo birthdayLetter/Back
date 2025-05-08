@@ -28,4 +28,5 @@ public class UserProfileRequestDTO {
         this.password = password;
 
     }
+
 }
