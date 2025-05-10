@@ -16,11 +16,11 @@ import java.util.List;
 @RequestMapping("/friend")
 public class FrinendController {
 
-   private final FriendWebSocketServiceImpl friendWebSocketService;
+
    private final FriendServiceImpl friendService;
 
-    public FrinendController(FriendWebSocketServiceImpl friendWebSocketService, FriendServiceImpl friendService) {
-        this.friendWebSocketService = friendWebSocketService;
+    public FrinendController(FriendServiceImpl friendService) {
+
         this.friendService = friendService;
     }
     /*
@@ -38,9 +38,9 @@ public class FrinendController {
      수락 대기중인 친구 목록만 보여줍니다
      */
     @GetMapping("/list/pending")
-    public  List<FriendInfoDTO> getPendingFriendList(@Parameter @RequestParam Long userId){
+    public ResponseEntity<?>  getPendingFriendList(@Parameter @RequestParam Long userId){
         List<FriendInfoDTO> pendingFriendList=friendService.getPendingFriendList(userId);
-        return pendingFriendList;
+        return ResponseEntity.ok().body(pendingFriendList);
     }
 
     /*
