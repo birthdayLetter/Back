@@ -1,27 +1,32 @@
-package com.springboot.letterbackend.data.entity;
+package com.springboot.letterbackend.letter.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Table(name = "letter")
 @Entity
+@Getter
+@Setter
 public class Letter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    String imageUrl;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    LetterTemplate letterTemplate;
 
     @Column(nullable = false)
+    @Lob
     private String content;
 
     @Column(nullable = false)
-    String reciverId;
+    String fromUserId;
 
     @Column(nullable = false)
-    String senderId;
+    String toUserId;
 
     @Column(nullable = false)
     int year; //생일편지보낸년도 구분
