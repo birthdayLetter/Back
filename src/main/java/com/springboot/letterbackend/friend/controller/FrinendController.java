@@ -47,9 +47,9 @@ public class FrinendController {
      조건에 맞는 친구 목록을 불러옵니다.
      */
     @GetMapping("/search")
-    public ResponseEntity<?> getFriendSearchList(@RequestParam String seachParam){
+    public ResponseEntity<?> getFriendSearchList(@RequestParam String searchParam){
         //이름 또는 아이디 검색 단어가 들어가있다면 친구목록을 불러옵니다.
-        List<ResponseSearchFriendDto> responseSearchFriendList=friendService.serchUserByParam(seachParam);
+        List<ResponseSearchFriendDto> responseSearchFriendList=friendService.serchUserByParam(searchParam);
         return ResponseEntity.ok().body(responseSearchFriendList);
     }
 

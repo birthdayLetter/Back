@@ -38,7 +38,7 @@ public class SecurityConfiguration {
                 "/sign-api/kakao/**","/sign-api/exception","/sign-api/check/email","/friend/**","/user/profile/**").permitAll());
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/ws/**", "/app/**", "/friend/**", "/letter/**","/ws-stomp/**","/sub/**","/pub/**").permitAll());
+                        .requestMatchers("/ws/**", "/app/**", "/friend/search", "/letter/**","/ws-stomp/**","/sub/**","/pub/**").permitAll());
 
 
         http.authorizeHttpRequests(authorizeRequests ->authorizeRequests.requestMatchers("/product/**").permitAll());
@@ -70,14 +70,20 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("*")); // 허용할 출처 목록
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용할 HTTP 메서드 목록
-        configuration.setAllowedHeaders(Arrays.asList("*")); // 허용할 헤더 목록
-        configuration.setAllowCredentials(true); // 쿠키 인증 정보 허용
-        configuration.setMaxAge(3600L); // Preflight 요청 캐싱 시간
+
+        // ⭐ 정확한 출처만 명시해야 Access-Control-Allow-Origin이 올바르게 설정됩니다!
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // 또는 배포 도메인
+
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // 모든 경로에 대해 위 설정 적용
+        source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
+
 
 }

@@ -7,11 +7,17 @@ import com.springboot.letterbackend.data.repository.UserRepository;
 import com.springboot.letterbackend.user.dto.response.UserProfileResponseDTO;
 import com.springboot.letterbackend.user.dto.request.UserProfileRequestDTO;
 import com.springboot.letterbackend.user.service.UserProfileService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
+
 @Service
 public class UserProfileserviceImpl implements UserProfileService {
+
+    Logger logger = LoggerFactory.getLogger(UserProfileserviceImpl.class);
 
     final private UserRepository userRepository;
 
@@ -36,6 +42,7 @@ public class UserProfileserviceImpl implements UserProfileService {
     @Override
     public UserProfileResponseDTO editUserProfile(UserProfileRequestDTO userProfileRequestDTO, User user) {
 
+        logger.info(userProfileRequestDTO.getUserId());
         //edit profile info
         user.setBirthDay(userProfileRequestDTO.getBirthDay());
         user.setName(userProfileRequestDTO.getName());
