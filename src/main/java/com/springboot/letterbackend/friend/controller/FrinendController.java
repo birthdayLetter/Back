@@ -1,5 +1,6 @@
 package com.springboot.letterbackend.friend.controller;
 
+import com.springboot.letterbackend.data.entity.User;
 import com.springboot.letterbackend.friend.dto.request.FriendApplyRequestDto;
 import com.springboot.letterbackend.friend.dto.response.FriendInfoDTO;
 import com.springboot.letterbackend.friend.dto.response.FriendResultDto;
@@ -8,6 +9,7 @@ import com.springboot.letterbackend.friend.service.impl.FriendServiceImpl;
 import com.springboot.letterbackend.friend.service.impl.FriendWebSocketServiceImpl;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,10 +29,10 @@ public class FrinendController {
     내친구 목록을 전부 데려옵니다.
      */
     @GetMapping("/list")
-    public List<FriendInfoDTO> getFriendList(@Parameter @RequestParam Long userId){
+    public List<FriendInfoDTO> getFriendList(@AuthenticationPrincipal User user){
         // 이걸 하려면..? 조회기능으로 추가하기가 있어야되요...
         //그리고 엔티티 일대다 관계설정되 해야되여... (모르는디.?)
-        List<FriendInfoDTO>friendList=friendService.getFriendList(userId);
+        List<FriendInfoDTO>friendList=friendService.getFriendList(user.getId());
         return  friendList;
     }
 
