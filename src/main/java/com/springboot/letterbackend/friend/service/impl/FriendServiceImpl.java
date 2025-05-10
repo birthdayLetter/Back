@@ -7,6 +7,7 @@ import com.springboot.letterbackend.data.repository.FriendRepository;
 import com.springboot.letterbackend.data.repository.UserRepository;
 import com.springboot.letterbackend.friend.dto.response.FriendInfoDTO;
 import com.springboot.letterbackend.friend.dto.response.FriendResultDto;
+import com.springboot.letterbackend.friend.dto.response.ResponseSearchFriendDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -42,13 +43,17 @@ public class FriendServiceImpl {
         return friendInfoList;
 
     }
-    public void serchUserByParam(String seachParam) {
+    public List<ResponseSearchFriendDto> serchUserByParam(String seachParam) {
         //이메일 또는 uid에 해당 글자가 들어가면 전부 출력함.
-        List<User> userList=userRepository.getUserByEmailLikeOrUidLike("%"+seachParam+"%","%"+seachParam+"%");
+        List<User> userList=userRepository.getUserByNameLikeOrUidLike("%"+seachParam+"%","%"+seachParam+"%");
+        List<ResponseSearchFriendDto> responseSearchFriendDto=new ArrayList<>();
         for(User user:userList){
+            logger.info(user.getName());
             logger.info(user.getUid());
-            logger.info(user.getEmail());
+            responseSearchFriendDto.add(new ResponseSearchFriendDto(user));
+
         }
+        return responseSearchFriendDto;
     }
 
 

@@ -3,6 +3,7 @@ package com.springboot.letterbackend.friend.controller;
 import com.springboot.letterbackend.friend.dto.request.FriendApplyRequestDto;
 import com.springboot.letterbackend.friend.dto.response.FriendInfoDTO;
 import com.springboot.letterbackend.friend.dto.response.FriendResultDto;
+import com.springboot.letterbackend.friend.dto.response.ResponseSearchFriendDto;
 import com.springboot.letterbackend.friend.service.impl.FriendServiceImpl;
 import com.springboot.letterbackend.friend.service.impl.FriendWebSocketServiceImpl;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -47,9 +48,9 @@ public class FrinendController {
      */
     @GetMapping("/search")
     public ResponseEntity<?> getFriendSearchList(@RequestParam String seachParam){
-        //이메일 또는 아이디 검색 단어가 들어가있다면 친구목록을 불러옵니다.
-        friendService.serchUserByParam(seachParam);
-        return null;
+        //이름 또는 아이디 검색 단어가 들어가있다면 친구목록을 불러옵니다.
+        List<ResponseSearchFriendDto> responseSearchFriendList=friendService.serchUserByParam(seachParam);
+        return ResponseEntity.ok().body(responseSearchFriendList);
     }
 
 

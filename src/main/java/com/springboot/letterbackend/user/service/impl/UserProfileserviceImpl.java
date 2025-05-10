@@ -2,7 +2,7 @@ package com.springboot.letterbackend.user.service.impl;
 
 import com.springboot.letterbackend.data.entity.User;
 import com.springboot.letterbackend.data.repository.FriendRepository;
-import com.springboot.letterbackend.data.repository.LetterRepository;
+import com.springboot.letterbackend.letter.repository.LetterRepository;
 import com.springboot.letterbackend.data.repository.UserRepository;
 import com.springboot.letterbackend.user.dto.response.UserProfileResponseDTO;
 import com.springboot.letterbackend.user.dto.request.UserProfileRequestDTO;
