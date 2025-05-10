@@ -1,10 +1,13 @@
-package com.springboot.letterbackend.data.entity;
+package com.springboot.letterbackend.letter.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Table(name = "card_template")
-public class CardTemplate {
+@Table
+@Getter @Setter
+public class LetterTemplate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
