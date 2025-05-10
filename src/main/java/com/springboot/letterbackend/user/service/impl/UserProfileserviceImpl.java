@@ -14,13 +14,12 @@ import org.springframework.stereotype.Service;
 public class UserProfileserviceImpl implements UserProfileService {
 
     final private UserRepository userRepository;
-    final private LetterRepository letterRepository;
+
     final private FriendRepository friendRepository;
     final private PasswordEncoder passwordEncoder;
 
-    public UserProfileserviceImpl(UserRepository userRepository, LetterRepository letterRepository, FriendRepository friendRepository, PasswordEncoder passwordEncoder) {
+    public UserProfileserviceImpl(UserRepository userRepository, FriendRepository friendRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.letterRepository = letterRepository;
         this.friendRepository = friendRepository;
         this.passwordEncoder = passwordEncoder;
     }

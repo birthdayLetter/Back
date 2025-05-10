@@ -9,9 +9,9 @@ import java.util.List;
 public interface LetterService {
 
     //유저의 모든 편지를 검색한다
-    public List<ResponseLetterPostDTO> getAllLetter(long toUserId);
+    public List<ResponseLetterPostDTO> getAllLetter(String toUserId);
     //유저의 특정년도 편지를 검색
-    public List<ResponseLetterPostDTO> getAllLetterByYear(int year, long toUserId);
+    public List<ResponseLetterPostDTO> getAllLetterByYear(int year, String toUserId);
     public void sendLetter(User user,RequestLetterPostDTO responseLetterPostDTO);
 }
 

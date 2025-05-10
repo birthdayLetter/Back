@@ -23,13 +23,13 @@ public class LetterController {
     // 지금 까지 받은 모든 편지를 검색합니다
     @GetMapping("/all")
     public List<ResponseLetterPostDTO> getAllLetter(@AuthenticationPrincipal User user){
-        List<ResponseLetterPostDTO> letterList=letterService.getAllLetter(user.getId());
+        List<ResponseLetterPostDTO> letterList=letterService.getAllLetter(user.getUid());
         return letterList;
     }
     //연도별 편지를 최신순으로 검색합니다
     @GetMapping("/search/{year}")
     public List<ResponseLetterPostDTO> getAllLetterByYear(@AuthenticationPrincipal User user,@RequestParam int year){
-        List<ResponseLetterPostDTO> letterList=letterService.getAllLetterByYear(year,user.getId());
+        List<ResponseLetterPostDTO> letterList=letterService.getAllLetterByYear(year,user.getUid());
         return letterList;
 
 

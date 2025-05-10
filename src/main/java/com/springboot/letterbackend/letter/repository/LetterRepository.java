@@ -8,6 +8,6 @@ import java.util.List;
 public interface LetterRepository extends JpaRepository<Letter, Long> {
 
 
-    List<Letter> getLettersByYearAndToUserId(int year,long userId);
-    List<Letter> getLettersByToUserId(long toUserId);
+    List<Letter> getLetterByYearAndToUserId(int year,String toUserId);
+    List<Letter> getLetterByToUserId(String toUserId);
 }

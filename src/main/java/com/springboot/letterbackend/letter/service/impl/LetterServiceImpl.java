@@ -21,9 +21,9 @@ public class LetterServiceImpl implements LetterService {
     UserRepository userRepository;
 
     @Override
-    public List<ResponseLetterPostDTO> getAllLetter(long toUserId) {
-        String toUserName=userRepository.getUserById(toUserId).getUsername();
-        List<Letter> letters=letterRepository.getLettersByToUserId(toUserId);
+    public List<ResponseLetterPostDTO> getAllLetter(String toUserId) {
+        String toUserName=userRepository.getUserByUid(toUserId).getUsername();
+        List<Letter> letters=letterRepository.getLetterByToUserId(toUserId);
         List<ResponseLetterPostDTO> responseLetterPostDTOs=new ArrayList<>();
         letters.forEach(letter->{
 
@@ -36,10 +36,11 @@ public class LetterServiceImpl implements LetterService {
 
     }
 
+
     @Override
-    public List<ResponseLetterPostDTO> getAllLetterByYear(int year,long toUserId) {
-        String toUserName=userRepository.getUserById(toUserId).getUsername();
-        List<Letter> letters=letterRepository.getLettersByYearAndToUserId(year,toUserId);
+    public List<ResponseLetterPostDTO> getAllLetterByYear(int year,String toUserId) {
+        String toUserName=userRepository.getUserByUid(toUserId).getUsername();
+        List<Letter> letters=letterRepository.getLetterByYearAndToUserId(year,toUserId);
         List<ResponseLetterPostDTO> responseLetterPostDTOs=new ArrayList<>();
         letters.forEach(letter->{
 
