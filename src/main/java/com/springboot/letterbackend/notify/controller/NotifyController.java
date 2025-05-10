@@ -21,7 +21,7 @@ public class NotifyController {
     @GetMapping(value = "/subscribe",produces ="text/event-stream")
     public SseEmitter subscribe(@AuthenticationPrincipal User user,  @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
 
-        return notifyService.subscribe(principal.getUsername(), lastEventId);
+        return notifyService.subscribe(user.getUsername(), lastEventId);
 
     }
 }
