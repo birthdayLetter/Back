@@ -90,8 +90,8 @@ public class KakaoSignServiceImpl implements SignService {
             }
         }else{
             //회원가입을 진햅하고, 로그인값을 반환합니다.
-            signUp(kakaoResponseDTO.getEmail(),"",kakaoResponseDTO.getName(),kakaoResponseDTO.getProfileImg(),null);
-            signInResultDto=signIn(kakaoResponseDTO.getEmail(),"");
+            signUp(kakaoResponseDTO.getEmail(),kakaoResponseDTO.getEmail(),kakaoResponseDTO.getName(),kakaoResponseDTO.getProfileImg(),null);
+            signInResultDto=signIn(kakaoResponseDTO.getEmail(),kakaoResponseDTO.getEmail());
         }
 
         return signInResultDto;
