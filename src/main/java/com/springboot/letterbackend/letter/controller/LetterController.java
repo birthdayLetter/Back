@@ -27,7 +27,7 @@ public class LetterController {
         return letterList;
     }
     //연도별 편지를 최신순으로 검색합니다
-    @GetMapping("/search/{year}")
+    @GetMapping("/search")
     public List<ResponseLetterPostDTO> getAllLetterByYear(@AuthenticationPrincipal User user,@RequestParam int year){
         List<ResponseLetterPostDTO> letterList=letterService.getAllLetterByYear(year,user.getUid());
         return letterList;
@@ -37,6 +37,7 @@ public class LetterController {
     //편지를 보냅니다.
     @PostMapping("/send")
     public void sendLetter(@AuthenticationPrincipal User user,@RequestBody RequestLetterPostDTO responseLetterPostDTO){
+        letterService.sendLetter(user,responseLetterPostDTO);
 
     }
 }
