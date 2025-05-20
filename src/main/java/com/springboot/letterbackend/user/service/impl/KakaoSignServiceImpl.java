@@ -135,7 +135,7 @@ public class KakaoSignServiceImpl implements SignService {
         User user;
         user=User.builder()
                 .uid(UUID.randomUUID().toString().substring(0,8)) //임시로 만든다음에 나중에 수정하도록한다. 8자리로 한정함
-                .password("")
+                .password(passwordEncoder.encode(password))
                 .profileImgUrl(url)
                 .name(name)
                 .email(id)
