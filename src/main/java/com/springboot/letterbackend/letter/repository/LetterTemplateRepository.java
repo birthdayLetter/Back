@@ -14,4 +14,5 @@ public interface LetterTemplateRepository extends JpaRepository<LetterTemplate,L
     //특정 템플릿 아이디를 조회합니다.
     LetterTemplate findLetterById(long id);
 
+
 }
