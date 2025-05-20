@@ -3,6 +3,7 @@ package com.springboot.letterbackend.letter.dto;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter@Setter
 @AllArgsConstructor
@@ -13,8 +14,8 @@ public class RequestLetterPostDTO {
     String fromUser;//받는사람
     String toUser;//보내는 사람
     String content;
-    LocalDate date;
-    String letterTemplateUrl;
+    LocalDateTime date;
+    long letterTemplateId;
 
 
 }
