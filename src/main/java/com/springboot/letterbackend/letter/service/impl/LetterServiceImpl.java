@@ -2,6 +2,7 @@ package com.springboot.letterbackend.letter.service.impl;
 
 import com.springboot.letterbackend.data.entity.User;
 import com.springboot.letterbackend.letter.dto.RequestLetterPostDTO;
+import com.springboot.letterbackend.letter.entity.LetterTemplate;
 import com.springboot.letterbackend.letter.repository.LetterRepository;
 import com.springboot.letterbackend.data.repository.UserRepository;
 import com.springboot.letterbackend.letter.dto.ResponseLetterPostDTO;
@@ -55,6 +56,15 @@ public class LetterServiceImpl implements LetterService {
 
     @Override
     public void sendLetter(User user, RequestLetterPostDTO responseLetterPostDTO) {
+        Letter letter=new Letter();
+        letter.setContent(responseLetterPostDTO.getContent());
+        letter.setToUserId(String.valueOf(user.getId()));
+        letter.setFromUserId(responseLetterPostDTO.getFromUser());
+        LetterTemplate letterTemplate=letterTemplateRepository.findLetterById(responseLetterPostDTO.getLetterTemplateId());
+        letter.setLetterTemplate(letterTemplate);
+        letter.setYear(responseLetterPostDTO.getDate().getYear());
+        letter.setCreatedDate(responseLetterPostDTO.getDate());
+        letterRepository.save(letter);
 
     }
     //
