@@ -35,7 +35,7 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/sign-api/sign-in",
                 "/sign-api/sign-up",
                 "/sign-api/kakao/sign-up",
-                "/sign-api/kakao/**","/sign-api/exception","/sign-api/check/email","/friend/**","/user/profile/**").permitAll());
+                "/sign-api/kakao/**","/sign-api/exception","/sign-api/check/email","/friend/**","/user/profile/**","/friend/**").permitAll());
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/ws/**", "/app/**", "/friend/**", "/letter/**","/ws-stomp/**","/sub/**","/pub/**").permitAll());
@@ -74,7 +74,7 @@ public class SecurityConfiguration {
         // ⭐ 정확한 출처만 명시해야 Access-Control-Allow-Origin이 올바르게 설정됩니다!
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // 또는 배포 도메인
 
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE","PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
