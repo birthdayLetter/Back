@@ -20,8 +20,10 @@ public class NotifyController {
 
     @GetMapping(value = "/subscribe",produces ="text/event-stream")
     public SseEmitter subscribe(@AuthenticationPrincipal User user,  @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
-
-        return notifyService.subscribe(user.getUsername(), lastEventId);
+        //Last-Event-Id 이전에 받지 못한 이벤트가 존재하는 경우, 받은
+        return notifyService.subscribe(user.getEmail(), lastEventId);
 
     }
+
+
 }
