@@ -63,4 +63,14 @@ public class UserProfileserviceImpl implements UserProfileService {
         UserProfileResponseDTO userProfileResponseDTO = new UserProfileResponseDTO(user);
         return userProfileResponseDTO;
     }
+
+
+    //유저를 uId로 찾아옵니다...? 어떤걸로지
+    public User getUserProfileByUserId(String userId) {
+
+        User user=userRepository.getUserByUid(userId);
+
+        UserProfileResponseDTO userProfileResponseDTO = new UserProfileResponseDTO(user);
+        return user;
+    }
 }
