@@ -31,6 +31,7 @@ public class EmitterRepositoryImpl implements EmitterRepository {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
+    //멤버아이디로 연결여부 찾아옴.
     @Override
     public Map<String, Object> findAllEventCacheStartWithByMemberId(String memberId) {
         return emitters.entrySet().stream()
