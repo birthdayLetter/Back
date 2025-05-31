@@ -4,19 +4,35 @@ import com.springboot.letterbackend.data.entity.User;
 import com.springboot.letterbackend.letter.dto.RequestLetterPostDTO;
 import com.springboot.letterbackend.letter.dto.ResponseLetterPostDTO;
 import com.springboot.letterbackend.letter.service.LetterService;
+import com.springboot.letterbackend.notify.common.NotificationType;
+import com.springboot.letterbackend.notify.repository.EmitterRepositoryImpl;
+import com.springboot.letterbackend.notify.service.NotifyService;
+import com.springboot.letterbackend.user.dto.response.UserProfileResponseDTO;
+import com.springboot.letterbackend.user.service.UserProfileService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/letter")
 public class LetterController {
 
     private  final  LetterService letterService;
+    private final NotifyService notifyService;
+    private final UserProfileService userProfileService;
+    private final EmitterRepositoryImpl emitterRepository;
 
-    public LetterController(LetterService letterService) {
+
+
+    public LetterController(LetterService letterService, NotifyService notifyService, UserProfileService userProfileService, EmitterRepositoryImpl emitterRepository) {
         this.letterService = letterService;
+        this.notifyService = notifyService;
+        this.userProfileService = userProfileService;
+        this.emitterRepository = emitterRepository;
     }
 
 
@@ -38,6 +54,24 @@ public class LetterController {
     @PostMapping("/send")
     public void sendLetter(@AuthenticationPrincipal User user,@RequestBody RequestLetterPostDTO responseLetterPostDTO){
         letterService.sendLetter(user,responseLetterPostDTO);
+        User toUser=userProfileService.getUserProfileByUserId(responseLetterPostDTO.getToUser());
+        String receiverId=responseLetterPostDTO.getToUser();
+        Map<String, SseEmitter> emitterMap= emitterRepository.findAllEmitterStartWithByMemberId(receiverId);
+        if(!emitterMap.isEmpty()){
+            //sse가 연결되어 있으면
+            try{
+                notifyService.send(toUser, NotificationType.LETTER,"새로운 편지가 도착했어요!","확인시에 연결될 링크 그러니까 친구확인을 누르면 이동할 링크");
+            }catch (Exception e){
+                emitterRepository.deleteById(receiverId);
+            }
+
+        }else{
+            // 일단 저장해두기
+          //Notification저장하기
+        }
+
+
+
 
     }
 }
