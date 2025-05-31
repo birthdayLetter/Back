@@ -13,6 +13,8 @@ public interface LetterService {
     //유저의 특정년도 편지를 검색
     public List<ResponseLetterPostDTO> getAllLetterByYear(int year, String toUserId);
     public void sendLetter(User user,RequestLetterPostDTO responseLetterPostDTO);
+
+    public List<Integer> getLetterMain(Long id);
 }
 
 

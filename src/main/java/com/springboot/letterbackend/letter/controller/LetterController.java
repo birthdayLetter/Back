@@ -34,6 +34,11 @@ public class LetterController {
         this.userProfileService = userProfileService;
         this.emitterRepository = emitterRepository;
     }
+    //편지페이지의 메인입니다. 받은 편지의 년도수만 보내줍니다.
+    @GetMapping("/letter/main")
+    public List<Integer> getLetterMain(@AuthenticationPrincipal User user){
+        return letterService.getLetterMain(user.getId());
+    }
 
 
     // 지금 까지 받은 모든 편지를 검색합니다

@@ -67,6 +67,12 @@ public class LetterServiceImpl implements LetterService {
         letterRepository.save(letter);
 
     }
+
+    @Override
+    public  List<Integer> getLetterMain(Long id) {
+        List<Integer> distinctYesrs=letterRepository.findDistinctYearsByToUserId(id);
+        return distinctYesrs;
+    }
     //
 
 
