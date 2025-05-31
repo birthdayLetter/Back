@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Builder
 public class RequestLetterPostDTO {
     long letterId;
-    String fromUser;//받는사람
-    String toUser;//보내는 사람
+    String fromUser;//보내는 사람
+    String toUser;//받는사람
     String content;
     LocalDateTime date;
     long letterTemplateId;
