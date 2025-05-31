@@ -24,19 +24,19 @@ public class NotifyService {
         this.notifyRepository = notifyRepository;
     }
 
-    public SseEmitter subscribe(String username,String lastEventId){
-        String emitterId=makeTimeIncludeId(username);
+    public SseEmitter subscribe(String email,String lastEventId){
+        String emitterId=makeTimeIncludeId(email);
         SseEmitter emitter =emitterRepository.save(emitterId,new SseEmitter(DEFAULT_TIMEOUT));
         emitter.onCompletion(()-> emitterRepository.deleteById(emitterId));
         emitter.onTimeout(() -> emitterRepository.deleteById(emitterId));
 
         //503 에러를 방지하기 위한 더미 이벤트 전송
-        String eventId=makeTimeIncludeId(username);
-        sendNotification(emitter,eventId,emitterId,"EventStream Created. [userEmail="+username+"]");
+        String eventId=makeTimeIncludeId(email);
+        sendNotification(emitter,eventId,emitterId,"EventStream Created. [userEmail="+email+"]");
 
         //클라이언트가 미수신한 Event 목록이 존재할 경우 전송하여 Event 유실을 예방
         if(hasLostData(lastEventId)){
-            sendLostData(lastEventId,username,emitterId,emitter);
+            sendLostData(lastEventId,email,emitterId,emitter);
         }
         return emitter;
 
