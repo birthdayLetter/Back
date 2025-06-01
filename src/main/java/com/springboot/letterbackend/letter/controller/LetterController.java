@@ -65,7 +65,7 @@ public class LetterController {
     public ResponseEntity<?> sendLetter(@AuthenticationPrincipal User user, @RequestBody RequestLetterPostDTO responseLetterPostDTO){
         logger.info("responseLetterPostDTO:{}",responseLetterPostDTO.getContent());
         logger.info("responseLetterPostDTO:{}",responseLetterPostDTO.getLetterTemplateId());
-        logger.info("responseLetterPostDTO:{}",responseLetterPostDTO.getFromUser());
+        //logger.info("responseLetterPostDTO:{}",responseLetterPostDTO.getFromUser());
         logger.info("responseLetterPostDTO:{}",responseLetterPostDTO.getToUser());
         letterService.sendLetter(user,responseLetterPostDTO);
         return ResponseEntity.ok().body("success");
