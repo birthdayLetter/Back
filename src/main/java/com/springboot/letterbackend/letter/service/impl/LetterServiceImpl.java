@@ -9,12 +9,14 @@ import com.springboot.letterbackend.letter.dto.ResponseLetterPostDTO;
 import com.springboot.letterbackend.letter.entity.Letter;
 import com.springboot.letterbackend.letter.repository.LetterTemplateRepository;
 import com.springboot.letterbackend.letter.service.LetterService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class LetterServiceImpl implements LetterService {
 
@@ -64,9 +66,13 @@ public class LetterServiceImpl implements LetterService {
     @Override
     public void sendLetter(User user, RequestLetterPostDTO responseLetterPostDTO) {
         Letter letter=new Letter();
+        log.info(responseLetterPostDTO.getToUser());
         letter.setContent(responseLetterPostDTO.getContent());
-        letter.setToUserId(String.valueOf(user.getId()));
-        letter.setFromUserId(responseLetterPostDTO.getFromUser());
+        letter.setFromUserId(String.valueOf(user.getId()));
+
+        User toUser=userRepository.getUserByUid(responseLetterPostDTO.getToUser());
+        letter.setToUserId(String.valueOf(toUser.getId()));
+
         LetterTemplate letterTemplate=letterTemplateRepository.findLetterById(responseLetterPostDTO.getLetterTemplateId());
         letter.setLetterTemplate(letterTemplate);
         LocalDateTime  now=LocalDateTime.now();
