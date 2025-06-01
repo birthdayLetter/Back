@@ -18,9 +18,15 @@ import java.util.List;
 @Service
 public class LetterServiceImpl implements LetterService {
 
-    LetterRepository letterRepository;
-    LetterTemplateRepository letterTemplateRepository;
-    UserRepository userRepository;
+    private  final LetterRepository letterRepository;
+    private  final LetterTemplateRepository letterTemplateRepository;
+    private  final UserRepository userRepository;
+
+    public LetterServiceImpl(LetterRepository letterRepository, LetterTemplateRepository letterTemplateRepository, UserRepository userRepository) {
+        this.letterRepository = letterRepository;
+        this.letterTemplateRepository = letterTemplateRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public List<ResponseLetterPostDTO> getAllLetter(String toUserId) {
