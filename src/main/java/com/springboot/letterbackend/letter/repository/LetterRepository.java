@@ -9,7 +9,7 @@ import java.util.List;
 public interface LetterRepository extends JpaRepository<Letter, Long> {
 
 
-    List<Letter> getLetterByYearAndToUserId(int year,String toUserId);
+    List<Letter> getLetterByYearAndToUserId(int year,long toUserId);
     List<Letter> getLetterByToUserId(String toUserId);
     @Query("SELECT DISTINCT l.year FROM Letter l  WHERE  l.toUserId= :toUserId ORDER BY l.year")
     List<Integer> findDistinctYearsByToUserId(Long toUserId);
