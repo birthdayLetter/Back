@@ -40,6 +40,7 @@ public class LetterController {
     //편지페이지의 메인입니다. 받은 편지의 년도수만 보내줍니다.
     @GetMapping("/letter/main")
     public List<Integer> getLetterMain(@AuthenticationPrincipal User user){
+        logger.info("userId:{}",user.getId());
         return letterService.getLetterMain(user.getId());
     }
 
