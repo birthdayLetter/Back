@@ -9,6 +9,8 @@ import com.springboot.letterbackend.notify.repository.EmitterRepositoryImpl;
 import com.springboot.letterbackend.notify.service.NotifyService;
 import com.springboot.letterbackend.user.dto.response.UserProfileResponseDTO;
 import com.springboot.letterbackend.user.service.UserProfileService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -25,6 +27,7 @@ public class LetterController {
     private final NotifyService notifyService;
     private final UserProfileService userProfileService;
     private final EmitterRepositoryImpl emitterRepository;
+    private final Logger logger = LoggerFactory.getLogger(LetterController.class);
 
 
 
@@ -58,6 +61,7 @@ public class LetterController {
     //편지를 보냅니다.
     @PostMapping("/send")
     public void sendLetter(@AuthenticationPrincipal User user,@RequestBody RequestLetterPostDTO responseLetterPostDTO){
+        logger.info("responseLetterPostDTO:",responseLetterPostDTO.toString());
         letterService.sendLetter(user,responseLetterPostDTO);
         User toUser=userProfileService.getUserProfileByUserId(responseLetterPostDTO.getToUser());
         String receiverId=responseLetterPostDTO.getToUser();

@@ -11,6 +11,7 @@ import com.springboot.letterbackend.letter.repository.LetterTemplateRepository;
 import com.springboot.letterbackend.letter.service.LetterService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,8 +63,9 @@ public class LetterServiceImpl implements LetterService {
         letter.setFromUserId(responseLetterPostDTO.getFromUser());
         LetterTemplate letterTemplate=letterTemplateRepository.findLetterById(responseLetterPostDTO.getLetterTemplateId());
         letter.setLetterTemplate(letterTemplate);
-        letter.setYear(responseLetterPostDTO.getDate().getYear());
-        letter.setCreatedDate(responseLetterPostDTO.getDate());
+        LocalDateTime  now=LocalDateTime.now();
+        letter.setYear(now.getYear());
+        letter.setCreatedDate(now);
         letterRepository.save(letter);
 
     }
