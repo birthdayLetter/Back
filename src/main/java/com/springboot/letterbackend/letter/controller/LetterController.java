@@ -11,6 +11,7 @@ import com.springboot.letterbackend.user.dto.response.UserProfileResponseDTO;
 import com.springboot.letterbackend.user.service.UserProfileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -61,24 +62,28 @@ public class LetterController {
     }
     //편지를 보냅니다.
     @PostMapping("/send")
-    public void sendLetter(@AuthenticationPrincipal User user,@RequestBody RequestLetterPostDTO responseLetterPostDTO){
-        logger.info("responseLetterPostDTO:",responseLetterPostDTO.toString());
+    public ResponseEntity<?> sendLetter(@AuthenticationPrincipal User user, @RequestBody RequestLetterPostDTO responseLetterPostDTO){
+        logger.info("responseLetterPostDTO:{}",responseLetterPostDTO.getContent());
+        logger.info("responseLetterPostDTO:{}",responseLetterPostDTO.getLetterTemplateId());
+        logger.info("responseLetterPostDTO:{}",responseLetterPostDTO.getFromUser());
+        logger.info("responseLetterPostDTO:{}",responseLetterPostDTO.getToUser());
         letterService.sendLetter(user,responseLetterPostDTO);
-        User toUser=userProfileService.getUserProfileByUserId(responseLetterPostDTO.getToUser());
-        String receiverId=responseLetterPostDTO.getToUser();
-        Map<String, SseEmitter> emitterMap= emitterRepository.findAllEmitterStartWithByMemberId(receiverId);
-        if(!emitterMap.isEmpty()){
-            //sse가 연결되어 있으면
-            try{
-                notifyService.send(toUser, NotificationType.LETTER,"새로운 편지가 도착했어요!","확인시에 연결될 링크 그러니까 친구확인을 누르면 이동할 링크");
-            }catch (Exception e){
-                emitterRepository.deleteById(receiverId);
-            }
-
-        }else{
-            // 일단 저장해두기
-          //Notification저장하기
-        }
+        return ResponseEntity.ok().body("success");
+//        User toUser=userProfileService.getUserProfileByUserId(responseLetterPostDTO.getToUser());
+//        String receiverId=responseLetterPostDTO.getToUser();
+//        Map<String, SseEmitter> emitterMap= emitterRepository.findAllEmitterStartWithByMemberId(receiverId);
+//        if(!emitterMap.isEmpty()){
+//            //sse가 연결되어 있으면
+//            try{
+//                notifyService.send(toUser, NotificationType.LETTER,"새로운 편지가 도착했어요!","확인시에 연결될 링크 그러니까 친구확인을 누르면 이동할 링크");
+//            }catch (Exception e){
+//                emitterRepository.deleteById(receiverId);
+//            }
+//
+//        }else{
+//            // 일단 저장해두기
+//          //Notification저장하기
+//        }
 
 
 
