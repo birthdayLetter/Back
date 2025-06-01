@@ -35,7 +35,7 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/sign-api/sign-in",
                 "/sign-api/sign-up",
                 "/sign-api/kakao/sign-up",
-                "/sign-api/kakao/**","/sign-api/exception","/sign-api/check/email","/friend/**","/user/profile/**","/friend/**").permitAll());
+                "/sign-api/kakao/**","/sign-api/exception","/sign-api/check/email","/friend/**","/user/profile/**","/friend/**","/api/letter/**").permitAll());
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/ws/**", "/app/**", "/friend/**", "/letter/**","/ws-stomp/**","/sub/**","/pub/**").permitAll());
