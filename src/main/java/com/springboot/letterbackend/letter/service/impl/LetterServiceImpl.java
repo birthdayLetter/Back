@@ -50,7 +50,7 @@ public class LetterServiceImpl implements LetterService {
     @Override
     public List<ResponseLetterPostDTO> getAllLetterByYear(int year,long toUserId) {
         String toUserName=userRepository.getUserById(toUserId).getUsername();
-        List<Letter> letters=letterRepository.getLetterByYearAndToUserId(year,toUserId);
+        List<Letter> letters=letterRepository.getLetterByYearAndToUserId(year, String.valueOf(toUserId));
         List<ResponseLetterPostDTO> responseLetterPostDTOs=new ArrayList<>();
         letters.forEach(letter->{
 
