@@ -38,7 +38,7 @@ public class LetterServiceImpl implements LetterService {
         letters.forEach(letter->{
 
             String fromUserName=userRepository.getUserById(Long.valueOf(letter.getFromUserId())).getUsername();
-            responseLetterPostDTOs.add(new ResponseLetterPostDTO(letter,fromUserName,toUserName,letter.getLetterTemplate().getImgaeUrl()));
+            responseLetterPostDTOs.add(new ResponseLetterPostDTO(letter,fromUserName,toUserName,letter.getCreatedDate()));
 
         });
 
@@ -53,9 +53,9 @@ public class LetterServiceImpl implements LetterService {
         List<Letter> letters=letterRepository.getLetterByYearAndToUserId(year, String.valueOf(toUserId));
         List<ResponseLetterPostDTO> responseLetterPostDTOs=new ArrayList<>();
         letters.forEach(letter->{
-
+            log.info(letter.getFromUserId()+"->"+letter.getToUserId()+"->"+letter.getCreatedDate());
             String fromUserName=userRepository.getUserById(Long.valueOf(letter.getFromUserId())).getUsername();
-            responseLetterPostDTOs.add(new ResponseLetterPostDTO(letter,fromUserName,toUserName,letter.getLetterTemplate().getImgaeUrl()));
+            responseLetterPostDTOs.add(new ResponseLetterPostDTO(letter,fromUserName,toUserName,letter.getCreatedDate()));
 
         });
 

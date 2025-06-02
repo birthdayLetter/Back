@@ -55,6 +55,7 @@ public class LetterController {
     //연도별 편지를 최신순으로 검색합니다
     @GetMapping("/search/{year}")
     public List<ResponseLetterPostDTO> getAllLetterByYear(@AuthenticationPrincipal User user,@PathVariable int year){
+        logger.info("userId:{}",user.getId());
         List<ResponseLetterPostDTO> letterList=letterService.getAllLetterByYear(year, user.getId());
         return letterList;
 
